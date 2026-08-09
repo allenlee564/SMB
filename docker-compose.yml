@@ -1,0 +1,71 @@
+services:
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    networks:
+      - dmz-net
+    depends_on:
+      - course-api
+      - student-api
+    restart: unless-stopped
+
+  course-api:
+    build: ./course-api
+    container_name: course-api
+    env_file: .env
+    networks:
+      - dmz-net
+      - data-net
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  student-api:
+    build: ./student-api
+    container_name: student-api
+    env_file: .env
+    networks:
+      - dmz-net
+      - data-net
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    env_file: .env
+    networks:
+      - data-net
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    container_name: redis
+    networks:
+      - data-net
+    restart: unless-stopped
+
+  # portal:
+  #   前端「校園網首頁」容器，待前端負責人完成後在此接入
+  #   build: ./portal
+  #   networks: [dmz-net]
+
+  # admin:
+  #   前端「後台管理」容器，待前端負責人完成後在此接入
+  #   build: ./admin
+  #   networks: [dmz-net]
+
+networks:
+  dmz-net:
+  data-net:
+
+volumes:
+  pgdata:
