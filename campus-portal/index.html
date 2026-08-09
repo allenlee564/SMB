@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Campus Portal 校園資訊服務平台</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background: #f5f3ee;
+    color: #333;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.top {
+    background: #d9ae45;
+    color: white;
+    padding: 20px 25px 18px;
+}
+
+.top-inner {
+    max-width: 1100px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+    height: 58px;
+
+    border: 2px solid white;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.brand-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.brand-subtitle {
+    margin-top: 3px;
+    font-size: 12px;
+    opacity: .9;
+}
+
+.top-icons {
+    display: flex;
+    gap: 18px;
+}
+
+.top-icon {
+    text-align: center;
+    cursor: pointer;
+}
+
+.top-icon-circle {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid white;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+.top-icon-text {
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nav {
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-inner {
+    max-width: 1100px;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+}
+
+.nav button {
+    border: none;
+    background: transparent;
+
+    color: #333;
+
+    padding: 17px 25px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.nav button:hover {
+    background: #f4ead0;
+    color: #9b761f;
+}
+
+.nav button.active {
+    background: #f3ead3;
+    color: #9b761f;
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.container {
+    width: min(950px, 92%);
+    margin: auto;
+}
+
+.page {
+    display: none;
+    padding-bottom: 40px;
+}
+
+.page.active {
+    display: block;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    margin-top: 25px;
+
+    min-height: 300px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.35),
+            rgba(0,0,0,.5)
+        ),
+        linear-gradient(
+            135deg,
+            #d7c092,
+            #9e8455
+        );
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 35px;
+
+    color: white;
+}
+
+.hero h1 {
+    font-size: 31px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section {
+    margin-top: 32px;
+}
+
+.section-title {
+    text-align: center;
+
+    font-size: 22px;
+
+    color: #594b2d;
+
+    margin-bottom: 20px;
+}
+
+.section-title::after {
+    content: "";
+
+    display: block;
+
+    width: 45px;
+    height: 3px;
+
+    background: #d9ae45;
+
+    margin: 10px auto;
+}
+
+
+/* =====================================================
+   STUDENT SERVICES
+===================================================== */
+
+.services {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.service {
+    width: 100%;
+
+    background: white;
+
+    border: 1px solid #e5e0d5;
+    border-radius: 8px;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.service:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.08);
+
+    border-color: #d9ae45;
+}
+
+.service-icon {
+    width: 52px;
+    height: 52px;
+
+    background: #f5ecd7;
+
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+
+    margin-right: 18px;
+}
+
+.service-content {
+    flex: 1;
+}
+
+.service-title {
+    font-size: 17px;
+    font-weight: bold;
+
+    color: #594b2d;
+}
+
+.service-desc {
+    font-size: 12px;
+
+    color: #888;
+
+    margin-top: 5px;
+}
+
+.service-arrow {
+    font-size: 22px;
+
+    color: #b9953d;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+    background: white;
+
+    border: 1px solid #e5e0d5;
+    border-radius: 8px;
+
+    padding: 22px;
+
+    margin-top: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+
+    color: #594b2d;
+}
+
+.card-subtitle {
+    color: #999;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.back-button {
+    border: none;
+
+    background: #f1eadb;
+
+    color: #806321;
+
+    padding: 9px 15px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    background: #e9ddc0;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th {
+    background: #f5f1e8;
+
+    color: #705c2d;
+
+    font-size: 12px;
+
+    text-align: left;
+
+    padding: 13px;
+}
+
+td {
+    padding: 14px 13px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 13px;
+}
+
+.status {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 4px;
+
+    font-size: 11px;
+}
+
+.status-ok {
+    background: #e8f4eb;
+    color: #36754c;
+}
+
+.status-full {
+    background: #f8e7e5;
+    color: #a14a42;
+}
+
+.status-warning {
+    background: #fff2d5;
+    color: #97701e;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.action-button {
+    border: none;
+
+    background: #b58d32;
+
+    color: white;
+
+    padding: 7px 13px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
+.action-button:hover {
+    background: #947225;
+}
+
+.action-button.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+    display: grid;
+
+    grid-template-columns: 150px 1fr;
+
+    gap: 30px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+
+    background: #e8dcc0;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 45px;
+
+    color: #8b6c2c;
+}
+
+.profile-info {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.info-box {
+    background: #faf9f5;
+
+    border: 1px solid #eee8db;
+
+    padding: 15px;
+
+    border-radius: 6px;
+}
+
+.info-label {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   GPA
+===================================================== */
+
+.gpa-box {
+    text-align: center;
+
+    background: #f5ecd7;
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+}
+
+.gpa-number {
+    font-size: 38px;
+
+    font-weight: bold;
+
+    color: #8b6c2c;
+}
+
+.gpa-label {
+    font-size: 12px;
+    color: #806f4c;
+}
+
+
+/* =====================================================
+   TIMETABLE
+===================================================== */
+
+.timetable-wrapper {
+    overflow-x: auto;
+}
+
+.timetable {
+    min-width: 750px;
+
+    display: grid;
+
+    grid-template-columns: 70px repeat(5, 1fr);
+
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+.time-cell,
+.day-cell,
+.course-cell {
+    min-height: 72px;
+
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.day-cell {
+    min-height: 45px;
+
+    background: #f4ead2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    color: #705c2d;
+}
+
+.time-cell {
+    background: #fafafa;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #888;
+
+    font-size: 11px;
+}
+
+.course-cell {
+    padding: 5px;
+    background: white;
+}
+
+.course-block {
+    height: 100%;
+
+    background: #eee4c9;
+
+    border-left: 4px solid #b58d32;
+
+    border-radius: 5px;
+
+    padding: 9px;
+
+    color: #594b2d;
+}
+
+.course-block strong {
+    display: block;
+
+    font-size: 12px;
+
+    margin-bottom: 4px;
+}
+
+.course-block span {
+    display: block;
+
+    font-size: 10px;
+
+    color: #776b52;
+
+    margin-top: 2px;
+}
+
+
+/* =====================================================
+   ANNOUNCEMENT
+===================================================== */
+
+.notice {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 17px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.notice:last-child {
+    border-bottom: none;
+}
+
+.notice-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.notice-date {
+    font-size: 11px;
+    color: #999;
+}
+
+.tag {
+    display: inline-block;
+
+    background: #f3e7c8;
+
+    color: #967323;
+
+    padding: 3px 7px;
+
+    border-radius: 3px;
+
+    font-size: 10px;
+
+    margin-right: 7px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    margin-top: 40px;
+
+    background: #4c4538;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+footer h3 {
+    font-size: 17px;
+}
+
+footer p {
+    color: #d5d0c7;
+
+    font-size: 11px;
+
+    margin-top: 6px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px) {
+
+    .top-inner {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .brand-title {
+        font-size: 21px;
+    }
+
+    .nav-inner {
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+
+    .nav button {
+        white-space: nowrap;
+        padding: 14px 18px;
+    }
+
+    .hero {
+        min-height: 240px;
+        padding: 25px;
+    }
+
+    .hero h1 {
+        font-size: 25px;
+    }
+
+    .profile {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-avatar {
+        margin: auto;
+    }
+
+    .profile-info {
+        grid-template-columns: 1fr;
+    }
+
+    .notice {
+        flex-direction: column;
+        gap: 7px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     TOP HEADER
+===================================================== -->
+
+<header class="top">
+
+    <div class="top-inner">
+
+        <div class="brand">
+
+            <div class="logo">
+                CP
+            </div>
+
+            <div>
+
+                <div class="brand-title">
+                    校園資訊服務平台
+                </div>
+
+                <div class="brand-subtitle">
+                    CAMPUS INFORMATION PORTAL
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="top-icons">
+
+            <div class="top-icon">
+
+                <div class="top-icon-circle">
+                    📅
+                </div>
+
+                <div class="top-icon-text">
+                    行事曆
+                </div>
+
+            </div>
+
+
+            <div class="top-icon">
+
+                <div class="top-icon-circle">
+                    ✉
+                </div>
+
+                <div class="top-icon-text">
+                    電子郵件
+                </div>
+
+            </div>
+
+
+            <div class="top-icon">
+
+                <div class="top-icon-circle">
+                    🔔
+                </div>
+
+                <div class="top-icon-text">
+                    重要訊息
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="nav">
+
+    <div class="nav-inner">
+
+        <button onclick="showPage('home')" id="nav-home">
+            首頁
+        </button>
+
+        <button onclick="showPage('courses')" id="nav-courses">
+            我的課程
+        </button>
+
+        <button onclick="showPage('enrollment')" id="nav-enrollment">
+            網路選課
+        </button>
+
+        <button onclick="showPage('grades')" id="nav-grades">
+            成績查詢
+        </button>
+
+        <button onclick="showPage('profile')" id="nav-profile">
+            個人資訊
+        </button>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home" class="page active">
+
+    <section class="hero">
+
+        <div>
+
+            <h1>
+                歡迎回到校園資訊服務平台
+            </h1>
+
+            <p>
+                王小明同學，這裡可以快速查看你的校務資訊。
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2 class="section-title">
+            學生專區
+        </h2>
+
+
+        <div class="services">
+
+
+            <div class="service"
+                 onclick="showPage('courses')">
+
+                <div class="service-icon">
+                    📚
+                </div>
+
+                <div class="service-content">
+
+                    <div class="service-title">
+                        我的課程
+                    </div>
+
+                    <div class="service-desc">
+                        查看本學期修課、課表與課程資訊
+                    </div>
+
+                </div>
+
+                <div class="service-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <div class="service"
+                 onclick="showPage('enrollment')">
+
+                <div class="service-icon">
+                    📝
+                </div>
+
+                <div class="service-content">
+
+                    <div class="service-title">
+                        網路選課
+                    </div>
+
+                    <div class="service-desc">
+                        查詢開放課程並進行加選與退選
+                    </div>
+
+                </div>
+
+                <div class="service-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <div class="service"
+                 onclick="showPage('grades')">
+
+                <div class="service-icon">
+                    📊
+                </div>
+
+                <div class="service-content">
+
+                    <div class="service-title">
+                        成績查詢
+                    </div>
+
+                    <div class="service-desc">
+                        查看本學期與歷年修課成績
+                    </div>
+
+                </div>
+
+                <div class="service-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+            <div class="service"
+                 onclick="showPage('profile')">
+
+                <div class="service-icon">
+                    👤
+                </div>
+
+                <div class="service-content">
+
+                    <div class="service-title">
+                        個人資訊
+                    </div>
+
+                    <div class="service-desc">
+                        查看學號、系所、Email 與個人資料
+                    </div>
+
+                </div>
+
+                <div class="service-arrow">
+                    →
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ANNOUNCEMENTS -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            最新公告
+        </h2>
+
+        <div class="card">
+
+            <div class="notice">
+
+                <div class="notice-title">
+
+                    <span class="tag">
+                        重要
+                    </span>
+
+                    2026-1 學期選課注意事項
+
+                </div>
+
+                <div class="notice-date">
+                    2026/08/08
+                </div>
+
+            </div>
+
+
+            <div class="notice">
+
+                <div class="notice-title">
+
+                    <span class="tag">
+                        系統
+                    </span>
+
+                    校園資訊系統維護通知
+
+                </div>
+
+                <div class="notice-date">
+                    2026/08/07
+                </div>
+
+            </div>
+
+
+            <div class="notice">
+
+                <div class="notice-title">
+
+                    <span class="tag">
+                        課程
+                    </span>
+
+                    資訊安全課程選課公告
+
+                </div>
+
+                <div class="notice-date">
+                    2026/08/06
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+
+<!-- =====================================================
+     MY COURSES / TIMETABLE
+===================================================== -->
+
+<section id="courses" class="page">
+
+    <div class="section">
+
+        <button class="back-button"
+                onclick="showPage('home')">
+            ← 回到首頁
+        </button>
+
+        <h2 class="section-title">
+            我的課程
+        </h2>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <div class="card-title">
+                        2026-1 我的課表
+                    </div>
+
+                    <div class="card-subtitle">
+                        資訊管理學系・三年級
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="timetable-wrapper">
+
+                <div class="timetable">
+
+                    <!-- HEADER -->
+
+                    <div class="day-cell">
+                        時間
+                    </div>
+
+                    <div class="day-cell">
+                        星期一
+                    </div>
+
+                    <div class="day-cell">
+                        星期二
+                    </div>
+
+                    <div class="day-cell">
+                        星期三
+                    </div>
+
+                    <div class="day-cell">
+                        星期四
+                    </div>
+
+                    <div class="day-cell">
+                        星期五
+                    </div>
+
+
+                    <!-- 09:00 -->
+
+                    <div class="time-cell">
+                        09:00
+                    </div>
+
+                    <div class="course-cell">
+
+                        <div class="course-block">
+
+                            <strong>
+                                資料庫系統
+                            </strong>
+
+                            <span>
+                                CS301
+                            </span>
+
+                            <span>
+                                A301
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+
+                    <!-- 10:00 -->
+
+                    <div class="time-cell">
+                        10:00
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell">
+
+                        <div class="course-block">
+
+                            <strong>
+                                人工智慧概論
+                            </strong>
+
+                            <span>
+                                CS308
+                            </span>
+
+                            <span>
+                                B201
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+
+                    <!-- 11:00 -->
+
+                    <div class="time-cell">
+                        11:00
+                    </div>
+
+                    <div class="course-cell"></div>
+                    <div class="course-cell"></div>
+                    <div class="course-cell"></div>
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell">
+
+                        <div class="course-block">
+
+                            <strong>
+                                網路管理
+                            </strong>
+
+                            <span>
+                                CS310
+                            </span>
+
+                            <span>
+                                C201
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- 13:00 -->
+
+                    <div class="time-cell">
+                        13:00
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell">
+
+                        <div class="course-block">
+
+                            <strong>
+                                網頁程式設計
+                            </strong>
+
+                            <span>
+                                CS302
+                            </span>
+
+                            <span>
+                                B205
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+
+                    <!-- 14:00 -->
+
+                    <div class="time-cell">
+                        14:00
+                    </div>
+
+                    <div class="course-cell">
+
+                        <div class="course-block">
+
+                            <strong>
+                                程式設計
+                            </strong>
+
+                            <span>
+                                CS201
+                            </span>
+
+                            <span>
+                                A205
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="course-cell"></div>
+                    <div class="course-cell"></div>
+                    <div class="course-cell"></div>
+                    <div class="course-cell"></div>
+
+
+                    <!-- 15:00 -->
+
+                    <div class="time-cell">
+                        15:00
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell">
+
+                        <div class="course-block">
+
+                            <strong>
+                                資訊安全
+                            </strong>
+
+                            <span>
+                                CS305
+                            </span>
+
+                            <span>
+                                C102
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="course-cell"></div>
+
+                    <div class="course-cell"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COURSE LIST -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    修課清單
+                </div>
+
+                <div class="card-subtitle">
+                    共 6 門課程・18 學分
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>課號</th>
+                            <th>課程名稱</th>
+                            <th>教師</th>
+                            <th>時間</th>
+                            <th>學分</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>CS301</td>
+                            <td>資料庫系統</td>
+                            <td>王老師</td>
+                            <td>一 09:00</td>
+                            <td>3</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS308</td>
+                            <td>人工智慧概論</td>
+                            <td>林老師</td>
+                            <td>二 10:00</td>
+                            <td>3</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS302</td>
+                            <td>網頁程式設計</td>
+                            <td>李老師</td>
+                            <td>二 13:00</td>
+                            <td>3</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS305</td>
+                            <td>資訊安全</td>
+                            <td>陳老師</td>
+                            <td>三 15:00</td>
+                            <td>3</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS201</td>
+                            <td>程式設計</td>
+                            <td>張老師</td>
+                            <td>一 14:00</td>
+                            <td>3</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS310</td>
+                            <td>網路管理</td>
+                            <td>吳老師</td>
+                            <td>五 11:00</td>
+                            <td>3</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ENROLLMENT
+===================================================== -->
+
+<section id="enrollment" class="page">
+
+    <div class="section">
+
+        <button class="back-button"
+                onclick="showPage('home')">
+            ← 回到首頁
+        </button>
+
+        <h2 class="section-title">
+            網路選課
+        </h2>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <div class="card-title">
+                        2026-1 開放課程
+                    </div>
+
+                    <div class="card-subtitle">
+                        請確認課程時間是否衝堂
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>課號</th>
+                            <th>課程名稱</th>
+                            <th>教師</th>
+                            <th>時間</th>
+                            <th>學分</th>
+                            <th>名額</th>
+                            <th>操作</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>CS320</td>
+
+                            <td>雲端運算</td>
+
+                            <td>黃老師</td>
+
+                            <td>四 09:00</td>
+
+                            <td>3</td>
+
+                            <td>45 / 60</td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="enroll(this, '雲端運算')">
+
+                                    加選
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>CS325</td>
+
+                            <td>網路安全實務</td>
+
+                            <td>周老師</td>
+
+                            <td>五 13:00</td>
+
+                            <td>3</td>
+
+                            <td>38 / 50</td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="enroll(this, '網路安全實務')">
+
+                                    加選
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>CS330</td>
+
+                            <td>資料分析</td>
+
+                            <td>林老師</td>
+
+                            <td>四 14:00</td>
+
+                            <td>3</td>
+
+                            <td>60 / 60</td>
+
+                            <td>
+
+                                <button
+                                    class="action-button disabled"
+                                    disabled>
+
+                                    已額滿
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>CS335</td>
+
+                            <td>行動應用程式</td>
+
+                            <td>蔡老師</td>
+
+                            <td>五 15:00</td>
+
+                            <td>3</td>
+
+                            <td>28 / 50</td>
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="enroll(this, '行動應用程式')">
+
+                                    加選
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GRADES
+===================================================== -->
+
+<section id="grades" class="page">
+
+    <div class="section">
+
+        <button class="back-button"
+                onclick="showPage('home')">
+            ← 回到首頁
+        </button>
+
+        <h2 class="section-title">
+            成績查詢
+        </h2>
+
+
+        <div class="gpa-box">
+
+            <div class="gpa-number">
+                3.42
+            </div>
+
+            <div class="gpa-label">
+                2026-1 學期 GPA
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    2026-1 本學期成績
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>課號</th>
+                            <th>課程</th>
+                            <th>學分</th>
+                            <th>成績</th>
+                            <th>等第</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>CS301</td>
+                            <td>資料庫系統</td>
+                            <td>3</td>
+                            <td>87</td>
+                            <td>A-</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS302</td>
+                            <td>網頁程式設計</td>
+                            <td>3</td>
+                            <td>92</td>
+                            <td>A+</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS305</td>
+                            <td>資訊安全</td>
+                            <td>3</td>
+                            <td>85</td>
+                            <td>A-</td>
+                        </tr>
+
+                        <tr>
+                            <td>CS201</td>
+                            <td>程式設計</td>
+                            <td>3</td>
+                            <td>80</td>
+                            <td>B+</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    歷年成績
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>學期</th>
+                            <th>修課學分</th>
+                            <th>學期 GPA</th>
+                            <th>累計學分</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>2025-2</td>
+                            <td>17</td>
+                            <td>3.28</td>
+                            <td>68</td>
+                        </tr>
+
+                        <tr>
+                            <td>2025-1</td>
+                            <td>18</td>
+                            <td>3.35</td>
+                            <td>51</td>
+                        </tr>
+
+                        <tr>
+                            <td>2024-2</td>
+                            <td>17</td>
+                            <td>3.18</td>
+                            <td>33</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section id="profile" class="page">
+
+    <div class="section">
+
+        <button class="back-button"
+                onclick="showPage('home')">
+            ← 回到首頁
+        </button>
+
+        <h2 class="section-title">
+            個人資訊
+        </h2>
+
+
+        <div class="card">
+
+            <div class="profile">
+
+
+                <div>
+
+                    <div class="profile-avatar">
+                        王
+                    </div>
+
+                </div>
+
+
+                <div class="profile-info">
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            姓名
+                        </div>
+
+                        <div class="info-value">
+                            王小明
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            學號
+                        </div>
+
+                        <div class="info-value">
+                            112000123
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            系所
+                        </div>
+
+                        <div class="info-value">
+                            資訊管理學系
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            年級
+                        </div>
+
+                        <div class="info-value">
+                            三年級
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Email
+                        </div>
+
+                        <div class="info-value">
+                            student@example.edu.tw
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            身分
+                        </div>
+
+                        <div class="info-value">
+                            在學學生
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            入學年度
+                        </div>
+
+                        <div class="info-value">
+                            2023
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            班級
+                        </div>
+
+                        <div class="info-value">
+                            資管三甲
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    帳號安全
+                </div>
+
+            </div>
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    最近登入
+                </div>
+
+                <div class="info-value">
+                    2026/08/10 00:15
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <h3>
+        Campus Portal
+    </h3>
+
+    <p>
+        校園資訊服務平台
+    </p>
+
+    <p>
+        © 2026 Campus Information System
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   PAGE SWITCH
+===================================================== */
+
+function showPage(pageId) {
+
+    /*
+        隱藏所有頁面
+    */
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(function(page) {
+
+        page.classList.remove("active");
+
+    });
+
+
+    /*
+        顯示指定頁面
+    */
+
+    const target =
+        document.getElementById(pageId);
+
+    if (target) {
+
+        target.classList.add("active");
+
+    }
+
+
+    /*
+        更新上方選單
+    */
+
+    const navButtons =
+        document.querySelectorAll(".nav button");
+
+    navButtons.forEach(function(button) {
+
+        button.classList.remove("active");
+
+    });
+
+
+    const activeNav =
+        document.getElementById("nav-" + pageId);
+
+    if (activeNav) {
+
+        activeNav.classList.add("active");
+
+    }
+
+
+    /*
+        回到頁面頂端
+    */
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   ENROLL COURSE
+===================================================== */
+
+function enroll(button, courseName) {
+
+    button.textContent = "已加選";
+
+    button.classList.add("disabled");
+
+    button.disabled = true;
+
+    alert(
+        "加選成功！\n\n課程：" +
+        courseName
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+showPage("home");
+
+</script>
+
+
+</body>
+</html>
