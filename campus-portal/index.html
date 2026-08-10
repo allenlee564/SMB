@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>校園資訊服務平台</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background: #f5f3ee;
+
+    color: #333;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.top {
+    background: #d9ae45;
+    color: white;
+
+    padding: 20px 25px 18px;
+}
+
+.top-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+    height: 58px;
+
+    border: 2px solid white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.brand-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.brand-subtitle {
+    font-size: 12px;
+
+    margin-top: 3px;
+
+    opacity: .9;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.header-user {
+    font-size: 13px;
+}
+
+.logout {
+    border: 1px solid rgba(255,255,255,.7);
+
+    background: transparent;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+.nav {
+    background: white;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.nav a {
+    padding: 17px 25px;
+
+    text-decoration: none;
+
+    color: #333;
+
+    font-size: 15px;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: #f3ead3;
+
+    color: #9b761f;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: min(950px,92%);
+
+    margin: auto;
+
+    padding-bottom: 50px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    margin-top: 25px;
+
+    min-height: 280px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.35),
+            rgba(0,0,0,.5)
+        ),
+        linear-gradient(
+            135deg,
+            #d7c092,
+            #9e8455
+        );
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 35px;
+
+    color: white;
+}
+
+.hero h1 {
+    font-size: 31px;
+
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 14px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section {
+    margin-top: 32px;
+}
+
+.section-title {
+    text-align: center;
+
+    font-size: 22px;
+
+    color: #594b2d;
+
+    margin-bottom: 20px;
+}
+
+.section-title::after {
+    content: "";
+
+    display: block;
+
+    width: 45px;
+
+    height: 3px;
+
+    background: #d9ae45;
+
+    margin: 10px auto;
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+.services {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.service {
+    background: white;
+
+    border: 1px solid #e5e0d5;
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    color: #333;
+
+    transition: .2s;
+}
+
+.service:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.08);
+
+    border-color: #d9ae45;
+}
+
+.service-icon {
+    width: 52px;
+    height: 52px;
+
+    background: #f5ecd7;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+
+    margin-right: 18px;
+}
+
+.service-content {
+    flex: 1;
+}
+
+.service-title {
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: #594b2d;
+}
+
+.service-desc {
+    font-size: 12px;
+
+    color: #888;
+
+    margin-top: 5px;
+}
+
+.service-arrow {
+    color: #b9953d;
+
+    font-size: 22px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    background: white;
+
+    border: 1px solid #e5e0d5;
+
+    border-radius: 8px;
+
+    padding: 22px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th {
+    background: #f5f1e8;
+
+    color: #705c2d;
+
+    font-size: 12px;
+
+    padding: 13px;
+
+    text-align: left;
+}
+
+td {
+    padding: 13px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   TIMETABLE
+========================= */
+
+.timetable-wrapper {
+    overflow-x: auto;
+}
+
+.timetable {
+
+    min-width: 750px;
+
+    display: grid;
+
+    grid-template-columns:
+        70px repeat(5,1fr);
+
+    border-left: 1px solid #ddd;
+
+    border-top: 1px solid #ddd;
+}
+
+.time,
+.day,
+.cell {
+
+    min-height: 65px;
+
+    border-right: 1px solid #ddd;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.day {
+
+    min-height: 45px;
+
+    background: #f4ead2;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-weight: bold;
+
+    color: #705c2d;
+}
+
+.time {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #fafafa;
+
+    color: #888;
+
+    font-size: 11px;
+}
+
+.cell {
+    padding: 5px;
+}
+
+.course {
+
+    height: 100%;
+
+    background: #eee4c9;
+
+    border-left: 4px solid #b58d32;
+
+    border-radius: 5px;
+
+    padding: 7px;
+
+    color: #594b2d;
+}
+
+.course strong {
+    display: block;
+
+    font-size: 11px;
+
+    margin-bottom: 3px;
+}
+
+.course span {
+    display: block;
+
+    font-size: 9px;
+
+    color: #776b52;
+}
+
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 17px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.notice:last-child {
+    border-bottom: none;
+}
+
+.notice-title {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.notice-date {
+    color: #999;
+
+    font-size: 11px;
+}
+
+.tag {
+    background: #f3e7c8;
+
+    color: #967323;
+
+    padding: 3px 7px;
+
+    border-radius: 3px;
+
+    font-size: 10px;
+
+    margin-right: 7px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #4c4538;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+footer h3 {
+    font-size: 17px;
+}
+
+footer p {
+    font-size: 11px;
+
+    color: #d5d0c7;
+
+    margin-top: 6px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+    .top-inner {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .brand-title {
+        font-size: 21px;
+    }
+
+    .nav-inner {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+    }
+
+    .nav a {
+        white-space: nowrap;
+
+        padding: 14px 18px;
+    }
+
+    .hero {
+        min-height: 230px;
+
+        padding: 25px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .notice {
+        flex-direction: column;
+
+        gap: 6px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="top">
+
+<div class="top-inner">
+
+
+    <div class="brand">
+
+        <div class="logo">
+            cp
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                校園資訊服務平台
+            </div>
+
+            <div class="brand-subtitle">
+                CAMPUS INFORMATION PORTAL
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <span class="header-user">
+            lee wesley
+        </span>
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            登出
+
+        </button>
+
+    </div>
+
+
+</div>
+
+</header>
+
+
+
+<!-- NAV -->
+
+<nav class="nav">
+
+<div class="nav-inner">
+
+    <a href="index.html" class="active">
+        首頁
+    </a>
+
+    <a href="courses.html">
+        我的課程
+    </a>
+
+    <a href="enrollment.html">
+        網路選課
+    </a>
+
+    <a href="grades.html">
+        成績查詢
+    </a>
+
+    <a href="profile.html">
+        個人資訊
+    </a>
+
+</div>
+
+</nav>
+
+
+
+<main class="container">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div>
+
+    <h1>
+        歡迎回到校園資訊服務平台
+    </h1>
+
+    <p>
+        快速查看你的校務資訊。
+    </p>
+
+</div>
+
+</section>
+
+
+
+<!-- STUDENT SERVICES -->
+
+<section class="section">
+
+<h2 class="section-title">
+    學生專區
+</h2>
+
+
+<div class="services">
+
+
+<a href="courses.html" class="service">
+
+    <div class="service-icon">
+        📚
+    </div>
+
+    <div class="service-content">
+
+        <div class="service-title">
+            我的課程
+        </div>
+
+        <div class="service-desc">
+            查看本學期修課、課表與課程資訊
+        </div>
+
+    </div>
+
+    <div class="service-arrow">
+        →
+    </div>
+
+</a>
+
+
+
+<a href="enrollment.html" class="service">
+
+    <div class="service-icon">
+        📝
+    </div>
+
+    <div class="service-content">
+
+        <div class="service-title">
+            網路選課
+        </div>
+
+        <div class="service-desc">
+            查詢開放課程並進行加選與退選
+        </div>
+
+    </div>
+
+    <div class="service-arrow">
+        →
+    </div>
+
+</a>
+
+
+
+<a href="grades.html" class="service">
+
+    <div class="service-icon">
+        📊
+    </div>
+
+    <div class="service-content">
+
+        <div class="service-title">
+            成績查詢
+        </div>
+
+        <div class="service-desc">
+            查看本學期與歷年修課成績
+        </div>
+
+    </div>
+
+    <div class="service-arrow">
+        →
+    </div>
+
+</a>
+
+
+
+<a href="profile.html" class="service">
+
+    <div class="service-icon">
+        👤
+    </div>
+
+    <div class="service-content">
+
+        <div class="service-title">
+            個人資訊
+        </div>
+
+        <div class="service-desc">
+            查看學號、系所、Email 與個人資料
+        </div>
+
+    </div>
+
+    <div class="service-arrow">
+        →
+    </div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- WEEK SCHEDULE -->
+
+<section class="section">
+
+<h2 class="section-title">
+    我的課表
+</h2>
+
+
+<div class="card">
+
+<div class="timetable-wrapper">
+
+<div class="timetable">
+
+
+<!-- HEADER -->
+
+<div class="day">
+    時間
+</div>
+
+<div class="day">
+    星期一
+</div>
+
+<div class="day">
+    星期二
+</div>
+
+<div class="day">
+    星期三
+</div>
+
+<div class="day">
+    星期四
+</div>
+
+<div class="day">
+    星期五
+</div>
+
+
+<!-- 09 -->
+
+<div class="time">
+    09:00
+</div>
+
+<div class="cell">
+
+<div class="course">
+
+<strong>
+資料庫系統
+</strong>
+
+<span>
+CS301
+</span>
+
+<span>
+A301
+</span>
+
+</div>
+
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+
+<!-- 10 -->
+
+<div class="time">
+    10:00
+</div>
+
+<div class="cell"></div>
+
+<div class="cell">
+
+<div class="course">
+
+<strong>
+人工智慧概論
+</strong>
+
+<span>
+CS308
+</span>
+
+<span>
+B201
+</span>
+
+</div>
+
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+
+<!-- 11 -->
+
+<div class="time">
+    11:00
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell">
+
+<div class="course">
+
+<strong>
+網路管理
+</strong>
+
+<span>
+CS310
+</span>
+
+<span>
+C201
+</span>
+
+</div>
+
+</div>
+
+
+<!-- 13 -->
+
+<div class="time">
+    13:00
+</div>
+
+<div class="cell"></div>
+
+<div class="cell">
+
+<div class="course">
+
+<strong>
+網頁程式設計
+</strong>
+
+<span>
+CS302
+</span>
+
+<span>
+B205
+</span>
+
+</div>
+
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+
+<!-- 14 -->
+
+<div class="time">
+    14:00
+</div>
+
+<div class="cell">
+
+<div class="course">
+
+<strong>
+程式設計
+</strong>
+
+<span>
+CS201
+</span>
+
+<span>
+A205
+</span>
+
+</div>
+
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+
+<!-- 15 -->
+
+<div class="time">
+    15:00
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell">
+
+<div class="course">
+
+<strong>
+資訊安全
+</strong>
+
+<span>
+CS305
+</span>
+
+<span>
+C102
+</span>
+
+</div>
+
+</div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- NOTICE -->
+
+<section class="section">
+
+<h2 class="section-title">
+    最新公告
+</h2>
+
+
+<div class="card">
+
+
+<div class="notice">
+
+<div class="notice-title">
+
+<span class="tag">
+重要
+</span>
+
+2026-1 學期選課注意事項
+
+</div>
+
+<div class="notice-date">
+2026/08/08
+</div>
+
+</div>
+
+
+<div class="notice">
+
+<div class="notice-title">
+
+<span class="tag">
+系統
+</span>
+
+校園資訊系統維護通知
+
+</div>
+
+<div class="notice-date">
+2026/08/07
+</div>
+
+</div>
+
+
+<div class="notice">
+
+<div class="notice-title">
+
+<span class="tag">
+課程
+</span>
+
+資訊安全課程選課公告
+
+</div>
+
+<div class="notice-date">
+2026/08/06
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+<h3>
+Campus Portal
+</h3>
+
+<p>
+校園資訊服務平台
+</p>
+
+<p>
+© 2026 Campus Information System
+</p>
+
+</footer>
+
+
+
+<script>
+
+function logout() {
+
+    localStorage.removeItem("loginUser");
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+
+</body>
+</html>

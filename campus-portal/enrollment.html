@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>網路選課｜Campus Portal</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background: #f5f3ee;
+
+    color: #333;
+}
+
+.top {
+    background: #d9ae45;
+
+    color: white;
+
+    padding: 20px 25px;
+}
+
+.top-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+    height: 58px;
+
+    border: 2px solid white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.brand-title {
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+.brand-subtitle {
+    font-size: 12px;
+}
+
+.logout {
+    background: transparent;
+
+    border: 1px solid white;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.nav {
+    background: white;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.nav a {
+    padding: 17px 25px;
+
+    text-decoration: none;
+
+    color: #333;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: #f3ead3;
+
+    color: #9b761f;
+
+    font-weight: bold;
+}
+
+.container {
+    width: min(950px,92%);
+
+    margin: auto;
+
+    padding-bottom: 50px;
+}
+
+.title {
+    text-align: center;
+
+    color: #594b2d;
+
+    font-size: 24px;
+
+    margin: 35px 0 25px;
+}
+
+.title::after {
+    content: "";
+
+    display: block;
+
+    width: 45px;
+
+    height: 3px;
+
+    background: #d9ae45;
+
+    margin: 10px auto;
+}
+
+.card {
+    background: white;
+
+    border: 1px solid #e5e0d5;
+
+    border-radius: 8px;
+
+    padding: 22px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th {
+    background: #f5f1e8;
+
+    color: #705c2d;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    padding: 13px;
+}
+
+td {
+    padding: 14px 13px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 13px;
+}
+
+.button {
+    border: none;
+
+    background: #b58d32;
+
+    color: white;
+
+    padding: 7px 13px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #957327;
+}
+
+.button.done {
+    background: #5d825e;
+
+    cursor: default;
+}
+
+.button.full {
+    background: #aaa;
+
+    cursor: not-allowed;
+}
+
+footer {
+    background: #4c4538;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+footer p {
+    color: #d5d0c7;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+@media(max-width:700px) {
+
+    .top-inner {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .nav-inner {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+    }
+
+    .nav a {
+        white-space: nowrap;
+
+        padding: 14px 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="top">
+
+<div class="top-inner">
+
+<div class="brand">
+
+<div class="logo">
+CP
+</div>
+
+<div>
+
+<div class="brand-title">
+校園資訊服務平台
+</div>
+
+<div class="brand-subtitle">
+CAMPUS INFORMATION PORTAL
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="logout"
+onclick="logout()">
+
+登出
+
+</button>
+
+</div>
+
+</header>
+
+
+
+<nav class="nav">
+
+<div class="nav-inner">
+
+<a href="index.html">
+首頁
+</a>
+
+<a href="courses.html">
+我的課程
+</a>
+
+<a
+href="enrollment.html"
+class="active">
+
+網路選課
+
+</a>
+
+<a href="grades.html">
+成績查詢
+</a>
+
+<a href="profile.html">
+個人資訊
+</a>
+
+</div>
+
+</nav>
+
+
+
+<main class="container">
+
+<h1 class="title">
+網路選課
+</h1>
+
+
+<div class="card">
+
+<h2 style="color:#594b2d;margin-bottom:20px;">
+2026-1 開放課程
+</h2>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>課號</th>
+<th>課程名稱</th>
+<th>教師</th>
+<th>時間</th>
+<th>學分</th>
+<th>名額</th>
+<th>操作</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+<tr>
+
+<td>CS320</td>
+
+<td>雲端運算</td>
+
+<td>黃老師</td>
+
+<td>四 09:00</td>
+
+<td>3</td>
+
+<td>45 / 60</td>
+
+<td>
+
+<button
+class="button"
+onclick="enroll(this,'雲端運算')">
+
+加選
+
+</button>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>CS325</td>
+
+<td>網路安全實務</td>
+
+<td>周老師</td>
+
+<td>五 13:00</td>
+
+<td>3</td>
+
+<td>38 / 50</td>
+
+<td>
+
+<button
+class="button"
+onclick="enroll(this,'網路安全實務')">
+
+加選
+
+</button>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>CS330</td>
+
+<td>資料分析</td>
+
+<td>林老師</td>
+
+<td>四 14:00</td>
+
+<td>3</td>
+
+<td>60 / 60</td>
+
+<td>
+
+<button
+class="button full"
+disabled>
+
+已額滿
+
+</button>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>CS335</td>
+
+<td>行動應用程式</td>
+
+<td>蔡老師</td>
+
+<td>五 15:00</td>
+
+<td>3</td>
+
+<td>28 / 50</td>
+
+<td>
+
+<button
+class="button"
+onclick="enroll(this,'行動應用程式')">
+
+加選
+
+</button>
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</main>
+
+
+
+<footer>
+
+<h3>
+Campus Portal
+</h3>
+
+<p>
+校園資訊服務平台
+</p>
+
+</footer>
+
+
+
+<script>
+
+function enroll(button, course) {
+
+    button.textContent = "已加選";
+
+    button.classList.add("done");
+
+    button.disabled = true;
+
+    alert(
+        "加選成功！\n\n" +
+        "課程：" + course
+    );
+
+}
+
+
+function logout() {
+
+    localStorage.removeItem("loginUser");
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+
+</body>
+</html>
