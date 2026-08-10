@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>個人資訊｜Campus Portal</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background: #f5f3ee;
+
+    color: #333;
+}
+
+
+/* HEADER */
+
+.top {
+    background: #d9ae45;
+
+    color: white;
+
+    padding: 20px 25px;
+}
+
+.top-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+
+    height: 58px;
+
+    border: 2px solid white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.brand-title {
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+.brand-subtitle {
+    font-size: 12px;
+}
+
+.logout {
+    background: transparent;
+
+    border: 1px solid white;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+
+/* NAV */
+
+.nav {
+    background: white;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.nav a {
+    padding: 17px 25px;
+
+    text-decoration: none;
+
+    color: #333;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: #f3ead3;
+
+    color: #9b761f;
+
+    font-weight: bold;
+}
+
+
+/* MAIN */
+
+.container {
+    width: min(950px,92%);
+
+    margin: auto;
+
+    padding-bottom: 50px;
+}
+
+.title {
+    text-align: center;
+
+    color: #594b2d;
+
+    font-size: 24px;
+
+    margin: 35px 0 25px;
+}
+
+.title::after {
+    content: "";
+
+    display: block;
+
+    width: 45px;
+
+    height: 3px;
+
+    background: #d9ae45;
+
+    margin: 10px auto;
+}
+
+
+/* PROFILE */
+
+.card {
+    background: white;
+
+    border: 1px solid #e5e0d5;
+
+    border-radius: 8px;
+
+    padding: 30px;
+
+    margin-bottom: 20px;
+}
+
+.profile-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.avatar {
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: #e8dcc0;
+
+    color: #8b6c2c;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 38px;
+
+    font-weight: bold;
+}
+
+.profile-name {
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: #594b2d;
+}
+
+.student-id {
+    font-size: 12px;
+
+    color: #999;
+
+    margin-top: 5px;
+}
+
+.actions {
+    margin-left: auto;
+}
+
+.button {
+    border: none;
+
+    border-radius: 5px;
+
+    padding: 9px 16px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.edit-button {
+    background: #b58d32;
+
+    color: white;
+}
+
+.edit-button:hover {
+    background: #957327;
+}
+
+.cancel-button {
+    display: none;
+
+    background: #ddd;
+
+    color: #555;
+
+    margin-left: 6px;
+}
+
+
+/* INFO */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+.info-item {
+    background: #faf9f5;
+
+    border: 1px solid #eee8db;
+
+    border-radius: 6px;
+
+    padding: 15px;
+}
+
+.label {
+    font-size: 11px;
+
+    color: #999;
+
+    margin-bottom: 7px;
+}
+
+.value {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.input {
+    display: none;
+
+    width: 100%;
+
+    height: 38px;
+
+    border: 1px solid #d8cdb8;
+
+    border-radius: 5px;
+
+    padding: 0 10px;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.input:focus {
+    border-color: #b58d32;
+}
+
+
+/* SAVE */
+
+.save-area {
+    display: none;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eee;
+
+    text-align: right;
+}
+
+.save-button {
+    border: none;
+
+    background: #5d825e;
+
+    color: white;
+
+    padding: 10px 20px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background: #496a4b;
+}
+
+
+/* MESSAGE */
+
+.message {
+    display: none;
+
+    margin-top: 18px;
+
+    padding: 12px;
+
+    border-radius: 5px;
+
+    background: #e8f4eb;
+
+    color: #397146;
+
+    font-size: 12px;
+}
+
+
+/* SECURITY */
+
+.security-title {
+    font-size: 17px;
+
+    color: #594b2d;
+
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+.security-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+.security-item:last-child {
+    border-bottom: none;
+}
+
+.security-label {
+    font-size: 13px;
+}
+
+.security-value {
+    font-size: 12px;
+
+    color: #999;
+}
+
+
+/* FOOTER */
+
+footer {
+    background: #4c4538;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+footer p {
+    color: #d5d0c7;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    .top-inner {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .nav-inner {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+    }
+
+    .nav a {
+        white-space: nowrap;
+
+        padding: 14px 18px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .actions {
+        margin-left: 0;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="top">
+
+<div class="top-inner">
+
+<div class="brand">
+
+<div class="logo">
+CP
+</div>
+
+<div>
+
+<div class="brand-title">
+校園資訊服務平台
+</div>
+
+<div class="brand-subtitle">
+CAMPUS INFORMATION PORTAL
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="logout"
+onclick="logout()">
+
+登出
+
+</button>
+
+</div>
+
+</header>
+
+
+
+<nav class="nav">
+
+<div class="nav-inner">
+
+<a href="index.html">
+首頁
+</a>
+
+<a href="courses.html">
+我的課程
+</a>
+
+<a href="enrollment.html">
+網路選課
+</a>
+
+<a href="grades.html">
+成績查詢
+</a>
+
+<a
+href="profile.html"
+class="active">
+
+個人資訊
+
+</a>
+
+</div>
+
+</nav>
+
+
+
+<main class="container">
+
+<h1 class="title">
+個人資訊
+</h1>
+
+
+
+<div class="card">
+
+
+<div class="profile-header">
+
+
+<div
+class="avatar"
+id="avatar">
+
+王
+
+</div>
+
+
+<div>
+
+<div
+class="profile-name"
+id="displayName">
+
+王小明
+
+</div>
+
+<div class="student-id">
+
+學號：
+112000123
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+id="editButton"
+class="button edit-button"
+onclick="startEdit()">
+
+編輯資料
+
+</button>
+
+
+<button
+id="cancelButton"
+class="button cancel-button"
+onclick="cancelEdit()">
+
+取消
+
+</button>
+
+</div>
+
+
+</div>
+
+
+
+<div class="info-grid">
+
+
+<!-- 姓名 -->
+
+<div class="info-item">
+
+<div class="label">
+姓名
+</div>
+
+<div
+class="value"
+id="nameText">
+
+王小明
+
+</div>
+
+<input
+id="nameInput"
+class="input"
+value="王小明">
+
+</div>
+
+
+<!-- 學號 -->
+
+<div class="info-item">
+
+<div class="label">
+學號
+</div>
+
+<div class="value">
+112000123
+</div>
+
+</div>
+
+
+<!-- 系所 -->
+
+<div class="info-item">
+
+<div class="label">
+系所
+</div>
+
+<div
+class="value"
+id="departmentText">
+
+資訊管理學系
+
+</div>
+
+<input
+id="departmentInput"
+class="input"
+value="資訊管理學系">
+
+</div>
+
+
+<!-- 年級 -->
+
+<div class="info-item">
+
+<div class="label">
+年級
+</div>
+
+<div
+class="value"
+id="gradeText">
+
+三年級
+
+</div>
+
+<input
+id="gradeInput"
+class="input"
+value="三年級">
+
+</div>
+
+
+<!-- 班級 -->
+
+<div class="info-item">
+
+<div class="label">
+班級
+</div>
+
+<div
+class="value"
+id="classText">
+
+資管三甲
+
+</div>
+
+<input
+id="classInput"
+class="input"
+value="資管三甲">
+
+</div>
+
+
+<!-- Email -->
+
+<div class="info-item">
+
+<div class="label">
+Email
+</div>
+
+<div
+class="value"
+id="emailText">
+
+student@example.edu.tw
+
+</div>
+
+<input
+id="emailInput"
+class="input"
+value="student@example.edu.tw">
+
+</div>
+
+
+<!-- 電話 -->
+
+<div class="info-item">
+
+<div class="label">
+聯絡電話
+</div>
+
+<div
+class="value"
+id="phoneText">
+
+0912-345-678
+
+</div>
+
+<input
+id="phoneInput"
+class="input"
+value="0912-345-678">
+
+</div>
+
+
+<!-- 入學 -->
+
+<div class="info-item">
+
+<div class="label">
+入學年度
+</div>
+
+<div
+class="value"
+id="yearText">
+
+2023
+
+</div>
+
+<input
+id="yearInput"
+class="input"
+value="2023">
+
+</div>
+
+
+</div>
+
+
+
+<div
+id="saveArea"
+class="save-area">
+
+<button
+class="save-button"
+onclick="saveProfile()">
+
+儲存變更
+
+</button>
+
+</div>
+
+
+
+<div
+id="message"
+class="message">
+
+✓ 個人資料已成功更新
+
+</div>
+
+
+</div>
+
+
+
+<!-- SECURITY -->
+
+<div class="card">
+
+<div class="security-title">
+帳號安全
+</div>
+
+
+<div class="security-item">
+
+<span class="security-label">
+最近登入
+</span>
+
+<span class="security-value">
+2026/08/10 09:20
+</span>
+
+</div>
+
+
+<div class="security-item">
+
+<span class="security-label">
+帳號狀態
+</span>
+
+<span class="security-value">
+正常
+</span>
+
+</div>
+
+
+<div class="security-item">
+
+<span class="security-label">
+密碼
+</span>
+
+<span class="security-value">
+●●●●●●●●
+</span>
+
+</div>
+
+</div>
+
+
+</main>
+
+
+
+<footer>
+
+<h3>
+Campus Portal
+</h3>
+
+<p>
+校園資訊服務平台
+</p>
+
+</footer>
+
+
+
+<script>
+
+
+/* =========================
+   預設資料
+========================= */
+
+const defaultProfile = {
+
+    name: "lee wesley",
+
+    department: "資訊管理學系",
+
+    grade: "三年級",
+
+    className: "資管三甲",
+
+    email: "student@example.edu.tw",
+
+    phone: "0912-345-678",
+
+    year: "2023"
+
+};
+
+
+/* =========================
+   讀取資料
+========================= */
+
+let profile =
+    JSON.parse(
+        localStorage.getItem(
+            "studentProfile"
+        )
+    )
+    ||
+    defaultProfile;
+
+
+/* =========================
+   顯示資料
+========================= */
+
+function displayProfile() {
+
+    document.getElementById("nameText")
+        .textContent = profile.name;
+
+    document.getElementById("displayName")
+        .textContent = profile.name;
+
+    document.getElementById("departmentText")
+        .textContent = profile.department;
+
+    document.getElementById("gradeText")
+        .textContent = profile.grade;
+
+    document.getElementById("classText")
+        .textContent = profile.className;
+
+    document.getElementById("emailText")
+        .textContent = profile.email;
+
+    document.getElementById("phoneText")
+        .textContent = profile.phone;
+
+    document.getElementById("yearText")
+        .textContent = profile.year;
+
+    document.getElementById("avatar")
+        .textContent =
+        profile.name.charAt(0);
+
+
+    document.getElementById("nameInput")
+        .value = profile.name;
+
+    document.getElementById("departmentInput")
+        .value = profile.department;
+
+    document.getElementById("gradeInput")
+        .value = profile.grade;
+
+    document.getElementById("classInput")
+        .value = profile.className;
+
+    document.getElementById("emailInput")
+        .value = profile.email;
+
+    document.getElementById("phoneInput")
+        .value = profile.phone;
+
+    document.getElementById("yearInput")
+        .value = profile.year;
+
+}
+
+
+/* =========================
+   編輯
+========================= */
+
+function startEdit() {
+
+    document
+        .querySelectorAll(".value")
+        .forEach(function(element) {
+
+            element.style.display = "none";
+
+        });
+
+
+    document
+        .querySelectorAll(".input")
+        .forEach(function(element) {
+
+            element.style.display = "block";
+
+        });
+
+
+    document.getElementById("editButton")
+        .style.display = "none";
+
+
+    document.getElementById("cancelButton")
+        .style.display = "inline-block";
+
+
+    document.getElementById("saveArea")
+        .style.display = "block";
+
+}
+
+
+/* =========================
+   取消
+========================= */
+
+function cancelEdit() {
+
+    displayProfile();
+
+    document
+        .querySelectorAll(".value")
+        .forEach(function(element) {
+
+            element.style.display = "block";
+
+        });
+
+
+    document
+        .querySelectorAll(".input")
+        .forEach(function(element) {
+
+            element.style.display = "none";
+
+        });
+
+
+    document.getElementById("editButton")
+        .style.display = "inline-block";
+
+
+    document.getElementById("cancelButton")
+        .style.display = "none";
+
+
+    document.getElementById("saveArea")
+        .style.display = "none";
+
+}
+
+
+/* =========================
+   儲存
+========================= */
+
+function saveProfile() {
+
+    const name =
+        document.getElementById("nameInput")
+        .value.trim();
+
+    const department =
+        document.getElementById("departmentInput")
+        .value.trim();
+
+    const grade =
+        document.getElementById("gradeInput")
+        .value.trim();
+
+    const className =
+        document.getElementById("classInput")
+        .value.trim();
+
+    const email =
+        document.getElementById("emailInput")
+        .value.trim();
+
+    const phone =
+        document.getElementById("phoneInput")
+        .value.trim();
+
+    const year =
+        document.getElementById("yearInput")
+        .value.trim();
+
+
+    if (!name) {
+
+        alert("姓名不能為空");
+
+        return;
+
+    }
+
+
+    if (!email) {
+
+        alert("Email 不能為空");
+
+        return;
+
+    }
+
+
+    profile = {
+
+        name,
+        department,
+        grade,
+        className,
+        email,
+        phone,
+        year
+
+    };
+
+
+    localStorage.setItem(
+        "studentProfile",
+        JSON.stringify(profile)
+    );
+
+
+    displayProfile();
+
+
+    cancelEdit();
+
+
+    const message =
+        document.getElementById("message");
+
+
+    message.style.display = "block";
+
+
+    setTimeout(function() {
+
+        message.style.display = "none";
+
+    },3000);
+
+}
+
+
+/* =========================
+   登出
+========================= */
+
+function logout() {
+
+    localStorage.removeItem("loginUser");
+
+    window.location.href = "login.html";
+
+}
+
+
+/* =========================
+   初始化
+========================= */
+
+displayProfile();
+
+</script>
+
+
+</body>
+</html>
