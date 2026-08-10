@@ -206,7 +206,9 @@ erDiagram
 
 ## 八、待辦事項 (Open Items)
 
+- [x] ~~`enrollments` 沒有新增選課的 API~~ → 已補上 `POST /api/student/:id/courses`、`DELETE /api/student/:id/courses/:courseId`，`portal` 前端的「網路選課」頁面已串接
 - [ ] `incidents` / `incident_actions` 目前只有資料庫層，`course-api` / `student-api` 都還沒開對應的 API 端點
 - [ ] `/login` 驗證通過後尚未核發 session / JWT，Redis 已經在 `docker-compose.yml` 裡但還沒接上
 - [ ] `attack_type` / `severity` 的分類要等演練情境定案後再考慮收斂成固定選項
 - [ ] `enrollments.semester` 目前是自由文字，之後如果要跨學期查詢統計，考慮拆成 `academic_year` + `term` 兩個欄位
+- [ ] `users` 表沒有年級/班級/Email/電話/入學年度欄位，`profile.html` 這些欄位目前只存在瀏覽器 `localStorage`，沒有真的進資料庫——如果要留，之後要幫 `users` 加欄位
