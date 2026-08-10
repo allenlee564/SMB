@@ -1,0 +1,14 @@
+# 強制所有文字檔在 repo 裡一律存成 LF，不管 committer 端的 core.autocrlf 設成什麼，
+# 避免 Windows 開發、Linux 部署時因為換行符不一致出問題（尤其是未來如果加 .sh 腳本）。
+* text=auto eol=lf
+
+# 常見二進位檔類型明確標記，避免被誤判成文字檔做換行轉換
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.drawio binary
