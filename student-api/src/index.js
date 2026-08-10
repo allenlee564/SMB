@@ -62,17 +62,98 @@ app.get("/:id", async (req, res) => {
   }
 });
 
+// PUT /api/student/:id  (更新個人資料，目前只有 name/department 是真的 DB 欄位)
+app.put("/:id", async (req, res) => {
+  const { name, department } = req.body || {};
+  if (!name || !name.trim()) {
+    return res.status(400).json({ error: "missing_name" });
+  }
+
+  try {
+    const { rows } = await pool.query(
+      `UPDATE users SET name = $1, department = $2
+       WHERE id = $3 AND role = 'student'
+       RETURNING id, student_no, name, department`,
+      [name.trim(), department || null, req.params.id]
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "not_found" });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "query_failed", detail: err.message });
+  }
+});
+
 // GET /api/student/:id/courses
 app.get("/:id/courses", async (req, res) => {
   try {
     const { rows } = await pool.query(
-      `SELECT c.id, c.name, c.teacher, c.credits
+      `SELECT c.id, c.name, c.teacher, c.credits, e.semester, e.score
        FROM enrollments e
        JOIN courses c ON c.id = e.course_id
-       WHERE e.student_id = $1`,
+       WHERE e.student_id = $1
+       ORDER BY c.id`,
       [req.params.id]
     );
     res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: "query_failed", detail: err.message });
+  }
+});
+
+// POST /api/student/:id/courses  (選課，body: { course_id })
+app.post("/:id/courses", async (req, res) => {
+  const { course_id } = req.body || {};
+  if (!course_id) {
+    return res.status(400).json({ error: "missing_course_id" });
+  }
+
+  try {
+    const studentCheck = await pool.query(
+      "SELECT id FROM users WHERE id = $1 AND role = 'student'",
+      [req.params.id]
+    );
+    if (studentCheck.rows.length === 0) {
+      return res.status(404).json({ error: "student_not_found" });
+    }
+
+    const courseCheck = await pool.query("SELECT id, name, teacher, credits FROM courses WHERE id = $1", [
+      course_id,
+    ]);
+    if (courseCheck.rows.length === 0) {
+      return res.status(404).json({ error: "course_not_found" });
+    }
+
+    const { rows } = await pool.query(
+      `INSERT INTO enrollments (student_id, course_id, semester)
+       VALUES ($1, $2, to_char(now(), 'YYYY') || '-1')
+       ON CONFLICT (student_id, course_id) DO NOTHING
+       RETURNING student_id, course_id, semester, score`,
+      [req.params.id, course_id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(409).json({ error: "already_enrolled" });
+    }
+
+    res.status(201).json({ ...courseCheck.rows[0], semester: rows[0].semester, score: rows[0].score });
+  } catch (err) {
+    res.status(500).json({ error: "query_failed", detail: err.message });
+  }
+});
+
+// DELETE /api/student/:id/courses/:courseId（退選）
+app.delete("/:id/courses/:courseId", async (req, res) => {
+  try {
+    const { rowCount } = await pool.query(
+      "DELETE FROM enrollments WHERE student_id = $1 AND course_id = $2",
+      [req.params.id, req.params.courseId]
+    );
+    if (rowCount === 0) {
+      return res.status(404).json({ error: "not_enrolled" });
+    }
+    res.status(204).end();
   } catch (err) {
     res.status(500).json({ error: "query_failed", detail: err.message });
   }
