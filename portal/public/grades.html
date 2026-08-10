@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>成績查詢｜Campus Portal</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background: #f5f3ee;
+
+    color: #333;
+}
+
+
+/* HEADER */
+
+.top {
+    background: #d9ae45;
+
+    color: white;
+
+    padding: 20px 25px;
+}
+
+.top-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.logo {
+    width: 58px;
+
+    height: 58px;
+
+    border: 2px solid white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.brand-title {
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+.brand-subtitle {
+    font-size: 12px;
+}
+
+.logout {
+    background: transparent;
+
+    border: 1px solid white;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+
+/* NAV */
+
+.nav {
+    background: white;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-inner {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.nav a {
+    padding: 17px 25px;
+
+    text-decoration: none;
+
+    color: #333;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: #f3ead3;
+
+    color: #9b761f;
+
+    font-weight: bold;
+}
+
+
+/* MAIN */
+
+.container {
+    width: min(950px,92%);
+
+    margin: auto;
+
+    padding-bottom: 50px;
+}
+
+.title {
+    text-align: center;
+
+    color: #594b2d;
+
+    font-size: 24px;
+
+    margin: 35px 0 25px;
+}
+
+.title::after {
+    content: "";
+
+    display: block;
+
+    width: 45px;
+
+    height: 3px;
+
+    background: #d9ae45;
+
+    margin: 10px auto;
+}
+
+
+/* GPA */
+
+.gpa {
+    background: #f5ecd7;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+}
+
+.gpa-number {
+    font-size: 40px;
+
+    color: #8b6c2c;
+
+    font-weight: bold;
+}
+
+.gpa-label {
+    color: #806f4c;
+
+    font-size: 12px;
+}
+
+
+/* CARD */
+
+.card {
+    background: white;
+
+    border: 1px solid #e5e0d5;
+
+    border-radius: 8px;
+
+    padding: 22px;
+
+    margin-bottom: 20px;
+}
+
+
+/* TABLE */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th {
+    background: #f5f1e8;
+
+    color: #705c2d;
+
+    padding: 13px;
+
+    font-size: 12px;
+
+    text-align: left;
+}
+
+td {
+    padding: 14px 13px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 13px;
+}
+
+
+/* FOOTER */
+
+footer {
+    background: #4c4538;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+footer p {
+    color: #d5d0c7;
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+@media(max-width:700px) {
+
+    .top-inner {
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .nav-inner {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+    }
+
+    .nav a {
+        white-space: nowrap;
+
+        padding: 14px 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="top">
+
+<div class="top-inner">
+
+<div class="brand">
+
+<div class="logo">
+CP
+</div>
+
+<div>
+
+<div class="brand-title">
+校園資訊服務平台
+</div>
+
+<div class="brand-subtitle">
+CAMPUS INFORMATION PORTAL
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="logout"
+onclick="logout()">
+
+登出
+
+</button>
+
+</div>
+
+</header>
+
+
+
+<nav class="nav">
+
+<div class="nav-inner">
+
+<a href="index.html">
+首頁
+</a>
+
+<a href="courses.html">
+我的課程
+</a>
+
+<a href="enrollment.html">
+網路選課
+</a>
+
+<a
+href="grades.html"
+class="active">
+
+成績查詢
+
+</a>
+
+<a href="profile.html">
+個人資訊
+</a>
+
+</div>
+
+</nav>
+
+
+
+<main class="container">
+
+<h1 class="title">
+成績查詢
+</h1>
+
+
+<div class="gpa">
+
+<div class="gpa-number" id="gpaNumber">
+—
+</div>
+
+<div class="gpa-label" id="gpaLabel">
+總平均 GPA
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h2 style="color:#594b2d;margin-bottom:20px;" id="currentSemesterTitle">
+成績列表
+</h2>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>課程</th>
+<th>學分</th>
+<th>成績</th>
+<th>等第</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="gradesBody">
+
+<tr><td colspan="4">載入中...</td></tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h2 style="color:#594b2d;margin-bottom:20px;">
+各學期統計
+</h2>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>學期</th>
+<th>修課學分</th>
+<th>學期 GPA</th>
+<th>累計學分</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="semesterSummaryBody">
+
+<tr><td colspan="4">載入中...</td></tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</main>
+
+
+
+<footer>
+
+<h3>
+Campus Portal
+</h3>
+
+<p>
+校園資訊服務平台
+</p>
+
+</footer>
+
+
+
+<script src="api.js"></script>
+<script>
+
+const user = requireLogin();
+
+function weightedGpa(courses) {
+
+    const scored = courses.filter(function(c) { return c.score !== null && c.score !== undefined; });
+
+    if (scored.length === 0) return null;
+
+    const totalCredits = scored.reduce(function(sum, c) { return sum + c.credits; }, 0);
+    const totalPoints = scored.reduce(function(sum, c) {
+        return sum + scoreToGpaPoint(c.score) * c.credits;
+    }, 0);
+
+    return totalCredits === 0 ? null : totalPoints / totalCredits;
+
+}
+
+async function loadGrades() {
+
+    const gradesBody = document.getElementById("gradesBody");
+    const summaryBody = document.getElementById("semesterSummaryBody");
+
+    try {
+
+        const courses = await apiFetch(`/student/${user.id}/courses`);
+
+        if (courses.length === 0) {
+            gradesBody.innerHTML = '<tr><td colspan="4">目前沒有成績資料</td></tr>';
+            summaryBody.innerHTML = '<tr><td colspan="4">目前沒有成績資料</td></tr>';
+            document.getElementById("gpaNumber").textContent = "—";
+            return;
+        }
+
+        // 成績列表
+        gradesBody.innerHTML = courses.map(function(c) {
+            return "<tr>" +
+                "<td>" + c.name + "</td>" +
+                "<td>" + c.credits + "</td>" +
+                "<td>" + formatScore(c.score) + "</td>" +
+                "<td>" + scoreToLetter(c.score) + "</td>" +
+                "</tr>";
+        }).join("");
+
+        // 總平均 GPA（學分加權）
+        const overallGpa = weightedGpa(courses);
+        document.getElementById("gpaNumber").textContent =
+            overallGpa === null ? "—" : overallGpa.toFixed(2);
+
+        // 依學期分組，算每學期修課學分 / 學期 GPA / 累計學分
+        const bySemester = {};
+        courses.forEach(function(c) {
+            const key = c.semester || "未分類";
+            if (!bySemester[key]) bySemester[key] = [];
+            bySemester[key].push(c);
+        });
+
+        const semesters = Object.keys(bySemester).sort();
+        let cumulative = 0;
+
+        summaryBody.innerHTML = semesters.map(function(sem) {
+            const list = bySemester[sem];
+            const credits = list.reduce(function(sum, c) { return sum + c.credits; }, 0);
+            cumulative += credits;
+            const gpa = weightedGpa(list);
+
+            return "<tr>" +
+                "<td>" + sem + "</td>" +
+                "<td>" + credits + "</td>" +
+                "<td>" + (gpa === null ? "—" : gpa.toFixed(2)) + "</td>" +
+                "<td>" + cumulative + "</td>" +
+                "</tr>";
+        }).join("");
+
+    } catch (err) {
+
+        gradesBody.innerHTML = '<tr><td colspan="4">載入失敗：' + err.message + "</td></tr>";
+        summaryBody.innerHTML = "";
+
+    }
+
+}
+
+loadGrades();
+
+</script>
+
+
+</body>
+</html>
