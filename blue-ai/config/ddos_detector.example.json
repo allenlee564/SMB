@@ -1,0 +1,10 @@
+{
+  "interface": "AUTO_DETECT_AT_INSTALL",
+  "window_seconds": 10,
+  "packet_threshold": 1000,
+  "syn_threshold": 200,
+  "unique_ip_threshold": 5,
+  "candidate_min_packets": 20,
+  "cooldown_seconds": 60,
+  "max_ai_candidates": 1
+}

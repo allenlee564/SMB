@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR=/opt/blue-ai/state
+BLOCKED="$STATE_DIR/blocked_ips.txt"
+WHITELIST="$STATE_DIR/whitelist.txt"
+COMMENT=blue-ai
+
+die() { echo "ERROR: $*" >&2; exit 1; }
+need_root() { [[ ${EUID:-$(id -u)} -eq 0 ]] || die "must run as root"; }
+valid_ip() { [[ $1 =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]] && python3 -c 'import ipaddress,sys; ipaddress.IPv4Address(sys.argv[1])' "$1" 2>/dev/null; }
+valid_net() { python3 -c 'import ipaddress,sys; ipaddress.IPv4Network(sys.argv[1], strict=False)' "$1" 2>/dev/null; }
+has_chain() { iptables -w -nL "$1" >/dev/null 2>&1; }
+listed() { grep -Fqx -- "$2" "$1" 2>/dev/null; }
+is_whitelisted() {
+  python3 - "$1" "$WHITELIST" <<'PY'
+import ipaddress, pathlib, sys
+ip = ipaddress.IPv4Address(sys.argv[1])
+path = pathlib.Path(sys.argv[2])
+raise SystemExit(0 if any(ip in ipaddress.IPv4Network(x.strip(), strict=False)
+                          for x in path.read_text().splitlines() if x.strip()) else 1)
+PY
+}
+add_rule() {
+  local chain=$1 ip=$2
+  iptables -w -C "$chain" -s "$ip" -m comment --comment "$COMMENT" -j DROP 2>/dev/null ||
+    iptables -w -I "$chain" 1 -s "$ip" -m comment --comment "$COMMENT" -j DROP
+}
+del_rule() {
+  local chain=$1 ip=$2
+  while iptables -w -C "$chain" -s "$ip" -m comment --comment "$COMMENT" -j DROP 2>/dev/null; do
+    iptables -w -D "$chain" -s "$ip" -m comment --comment "$COMMENT" -j DROP
+  done
+}
+apply_ip() { add_rule INPUT "$1"; has_chain DOCKER-USER && add_rule DOCKER-USER "$1"; }
+remove_ip() { del_rule INPUT "$1"; has_chain DOCKER-USER && del_rule DOCKER-USER "$1"; }
+
+need_root
+mkdir -p "$STATE_DIR"; touch "$BLOCKED" "$WHITELIST"
+command=${1:-}; shift || true
+case "$command" in
+  block)
+    [[ $# -eq 1 ]] && valid_ip "$1" || die "valid IPv4 required"
+    is_whitelisted "$1" && die "refusing to block whitelisted IP: $1"
+    listed "$BLOCKED" "$1" || echo "$1" >>"$BLOCKED"
+    apply_ip "$1"; echo "BLOCKED: $1" ;;
+  unblock)
+    [[ $# -eq 1 ]] && valid_ip "$1" || die "valid IPv4 required"
+    remove_ip "$1"; grep -Fvx -- "$1" "$BLOCKED" >"$BLOCKED.tmp" || true
+    mv "$BLOCKED.tmp" "$BLOCKED"; echo "UNBLOCKED: $1" ;;
+  restore)
+    wait_seconds=0
+    if [[ ${1:-} == --wait-docker ]]; then wait_seconds=${2:-60}; fi
+    if [[ $wait_seconds =~ ^[0-9]+$ ]] && (( wait_seconds > 0 )); then
+      end=$((SECONDS + wait_seconds))
+      while ! has_chain DOCKER-USER && (( SECONDS < end )); do sleep 1; done
+    fi
+    while IFS= read -r ip; do [[ -z $ip ]] || { valid_ip "$ip" && ! is_whitelisted "$ip" && apply_ip "$ip"; }; done <"$BLOCKED"
+    has_chain DOCKER-USER || echo "WARNING: DOCKER-USER unavailable; restored INPUT rules only" >&2
+    echo "RESTORED" ;;
+  blocked)
+    [[ ${1:-} == list ]] || die "Usage: blueai-ipctl blocked list"
+    if [[ -s $BLOCKED ]]; then cat "$BLOCKED"; else echo "No blocked IPs."; fi ;;
+  whitelist)
+    sub=${1:-}; value=${2:-}
+    case "$sub" in
+      list) cat "$WHITELIST" ;;
+      add) valid_net "$value" || die "valid IPv4 CIDR required"; value=$(python3 -c 'import ipaddress,sys; print(ipaddress.IPv4Network(sys.argv[1],strict=False))' "$value"); listed "$WHITELIST" "$value" || echo "$value" >>"$WHITELIST"; echo "WHITELIST ADDED: $value" ;;
+      remove) valid_net "$value" || die "valid IPv4 CIDR required"; value=$(python3 -c 'import ipaddress,sys; print(ipaddress.IPv4Network(sys.argv[1],strict=False))' "$value"); grep -Fvx -- "$value" "$WHITELIST" >"$WHITELIST.tmp" || true; mv "$WHITELIST.tmp" "$WHITELIST"; echo "WHITELIST REMOVED: $value" ;;
+      *) die "Usage: blueai-ipctl whitelist {list|add CIDR|remove CIDR}" ;;
+    esac ;;
+  *) die "Usage: blueai-ipctl {block IP|unblock IP|restore [--wait-docker SEC]|blocked list|whitelist ...}" ;;
+esac

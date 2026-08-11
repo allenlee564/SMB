@@ -1,0 +1,6 @@
+{
+  "model": "qwen2.5:3b",
+  "ollama_url": "http://127.0.0.1:11434/api/chat",
+  "auto_block": false,
+  "min_block_severity": "high"
+}
