@@ -53,10 +53,40 @@ services:
       - data-net
     restart: unless-stopped
 
-  # portal:
-  #   前端「校園網首頁」容器，待前端負責人完成後在此接入
-  #   build: ./portal
-  #   networks: [dmz-net]
+  portal:
+    build: ./portal
+    container_name: portal
+    networks:
+      - dmz-net
+    depends_on:
+      - terminal-ws
+    restart: unless-stopped
+
+  # 左半邊終端機的後端：對 target-box 下 docker exec，透過 WebSocket 把 stdio 轉給瀏覽器
+  terminal-ws:
+    build: ./terminal-ws
+    container_name: terminal-ws
+    environment:
+      TARGET_CONTAINER: ${TARGET_CONTAINER:-target-box}
+      TARGET_USER: ${TARGET_USER:-customer}
+    volumes:
+      # 需要存取 host 的 docker daemon 才能 exec 進 target-box；僅供地端 demo 使用，
+      # 不要對外開放此服務的連接埠
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - dmz-net
+    depends_on:
+      - target-box
+    restart: unless-stopped
+
+  # 受測目標容器（示範用），後續依 campus-webserver-sdd.md 六階段攻擊鏈植入漏洞
+  # 預設以非 root 的 student 使用者登入；本地提權（flag04 等）會是之後才刻意植入的關卡
+  target-box:
+    build: ./target-box
+    container_name: target-box
+    networks:
+      - target-net
+    restart: unless-stopped
 
   # admin:
   #   前端「後台管理」容器，待前端負責人完成後在此接入
@@ -66,6 +96,7 @@ services:
 networks:
   dmz-net:
   data-net:
+  target-net:
 
 volumes:
   pgdata:

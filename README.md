@@ -11,7 +11,9 @@
 - ✅ Nginx（反代 + JSON log）
 - ✅ course-api / student-api（Node + Express 骨架，DB 查詢已接上暫定 schema）
 - ✅ PostgreSQL / Redis
-- ⏳ Portal / Admin（前端容器，待前端團隊完成後於 `docker-compose.yml` 取消註解接入）
+- ✅ Portal（購物網示範頁 + 按鈕觸發終端機，`portal/`）
+- ✅ terminal-ws（WebSocket 轉 `docker exec` 進 `target-box`，`terminal-ws/`）
+- ⏳ Admin（前端容器，待前端團隊完成後於 `docker-compose.yml` 取消註解接入）
 - ⏳ 正式 DB schema（目前 `db/init/001_placeholder_schema.sql` 為暫定版本，待資料庫團隊取代）
 
 ### 啟動方式

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>購物網</title>
+<link rel="stylesheet" href="/vendor/xterm-css/xterm.css" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">購物網</div>
+  </header>
+
+  <div class="search-hero">
+    <div class="search-box">
+      <input id="search-input" type="text" placeholder="搜尋商品..." autocomplete="off" />
+    </div>
+  </div>
+
+  <main class="product-grid" id="product-grid"></main>
+
+  <button id="hints-toggle" class="hints-toggle" title="開啟提示">💡 提示</button>
+  <button id="terminal-toggle" class="terminal-toggle" title="開啟終端機">⌨ Terminal</button>
+
+  <div id="terminal-drawer" class="terminal-drawer">
+    <div class="terminal-drawer-header">
+      <span>Terminal — target-box</span>
+      <button id="terminal-close" class="terminal-close" title="關閉">✕</button>
+    </div>
+    <div id="terminal"></div>
+  </div>
+
+  <div id="hints-modal" class="hints-modal">
+    <div class="hints-panel">
+      <div class="hints-panel-header">
+        <span>提示（選擇難度）</span>
+        <button id="hints-close" class="terminal-close" title="關閉">✕</button>
+      </div>
+      <div id="hints-tabs" class="hints-tabs"></div>
+      <ol id="hints-steps" class="hints-steps"></ol>
+    </div>
+  </div>
+
+  <script src="/vendor/xterm/xterm.js"></script>
+  <script src="/vendor/xterm-addon-fit/addon-fit.js"></script>
+  <script src="/products.js"></script>
+  <script src="/hints.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

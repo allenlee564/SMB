@@ -1,0 +1,264 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #f5f5f5;
+  color: #222;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---- 購物網頁面 ---- */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.search-hero {
+  display: flex;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.search-box {
+  width: 100%;
+  max-width: 480px;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+#search-input:focus {
+  border-color: #333;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 24px;
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.product-category {
+  font-size: 12px;
+  color: #888;
+}
+
+.product-price {
+  margin-top: auto;
+  font-size: 15px;
+  font-weight: 700;
+  color: #c0392b;
+}
+
+.product-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #999;
+  padding: 40px 0;
+}
+
+/* ---- 終端機開關按鈕 ---- */
+
+.terminal-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px 16px;
+  background: #1e1e1e;
+  color: #eee;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 50;
+}
+
+.terminal-toggle:hover {
+  background: #333;
+}
+
+.hints-toggle {
+  position: fixed;
+  right: 150px;
+  bottom: 20px;
+  padding: 10px 16px;
+  background: #b8860b;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 50;
+}
+
+.hints-toggle:hover {
+  background: #9a6f08;
+}
+
+/* ---- 提示視窗 ---- */
+
+.hints-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.hints-modal.open {
+  display: flex;
+}
+
+.hints-panel {
+  width: min(520px, 92vw);
+  max-height: 80vh;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hints-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-weight: 600;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.hints-panel-header .terminal-close {
+  color: #555;
+}
+
+.hints-panel-header .terminal-close:hover {
+  color: #000;
+}
+
+.hints-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 0;
+}
+
+.hints-tab {
+  flex: 1 1 auto;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: center;
+}
+
+.hints-tab.active {
+  background: #b8860b;
+  color: #fff;
+  border-color: #b8860b;
+}
+
+.hints-steps {
+  padding: 16px 20px 20px 36px;
+  overflow-y: auto;
+  line-height: 1.6;
+  font-size: 14px;
+  color: #333;
+}
+
+.hints-steps li {
+  margin-bottom: 8px;
+}
+
+/* ---- 終端機抽屜 ---- */
+
+.terminal-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100vw);
+  background: #1e1e1e;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.35);
+  z-index: 100;
+}
+
+.terminal-drawer.open {
+  transform: translateX(0);
+}
+
+.terminal-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #aaa;
+  background: #151515;
+  border-bottom: 1px solid #333;
+  flex: 0 0 auto;
+}
+
+.terminal-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.terminal-close:hover {
+  color: #fff;
+}
+
+#terminal {
+  flex: 1 1 auto;
+  padding: 4px;
+  min-height: 0;
+}
