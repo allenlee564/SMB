@@ -1,0 +1,43 @@
+# Python virtual environments and bytecode
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test, coverage, and tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Runtime output
+logs/
+state/
+*.log
+
+# Build and release output
+dist/
+build/
+*.egg-info/
+
+# Local-only configuration and environment files
+config/settings.local.json
+.env
+.env.*
+!.env.example
+
+# Editor and OS artifacts
+.vscode/
+.idea/
+*.tmp
+*.bak
+*.swp
+Thumbs.db
+Desktop.ini
+config/settings.json
+config/settings.json.bak

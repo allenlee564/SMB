@@ -1,0 +1,16 @@
+﻿{
+  "model": "qwen2.5:3b",
+  "ollama_url": "http://127.0.0.1:11434/api/chat",
+  "listen_host": "127.0.0.1",
+  "listen_port": 8765,
+  "request_timeout_seconds": 180,
+  "keep_alive": -1,
+  "model_warmup_timeout_seconds": 120,
+  "health_timeout_seconds": 2,
+  "allowed_origins": [
+    "http://YOUR-METIS-HOST:17681"
+  ],
+  "max_prompt_chars": 12000,
+  "rate_limit_requests_per_minute": 20,
+  "max_concurrent_inference": 1
+}
