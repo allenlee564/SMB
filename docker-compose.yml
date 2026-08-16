@@ -7,8 +7,16 @@ services:
     networks:
       - dmz-net
     depends_on:
+      - portal
       - course-api
       - student-api
+    restart: unless-stopped
+
+  portal:
+    build: ./portal
+    container_name: portal
+    networks:
+      - dmz-net
     restart: unless-stopped
 
   course-api:
@@ -52,11 +60,6 @@ services:
     networks:
       - data-net
     restart: unless-stopped
-
-  # portal:
-  #   前端「校園網首頁」容器，待前端負責人完成後在此接入
-  #   build: ./portal
-  #   networks: [dmz-net]
 
   # admin:
   #   前端「後台管理」容器，待前端負責人完成後在此接入

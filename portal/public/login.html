@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>校園資訊服務平台｜登入</title>
+
+
+    <style>
+
+        /* =========================
+           基本設定
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                "Noto Sans TC",
+                "Microsoft JhengHei",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(60, 50, 30, 0.35),
+                    rgba(60, 50, 30, 0.45)
+                ),
+                linear-gradient(
+                    135deg,
+                    #e5c66c,
+                    #a7833b
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+
+        /* =========================
+           登入區域
+        ========================= */
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 430px;
+
+        }
+
+
+        /* =========================
+           登入卡片
+        ========================= */
+
+        .login-card {
+
+            background: #ffffff;
+
+            border-radius: 12px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.20);
+
+        }
+
+
+        /* =========================
+           Logo
+        ========================= */
+
+        .logo {
+
+            width: 80px;
+            height: 80px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #d9ae45;
+
+            border: 5px solid #f3e5bd;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #ffffff;
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =========================
+           標題
+        ========================= */
+
+        .title {
+
+            text-align: center;
+
+            color: #594b2d;
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #999999;
+
+            font-size: 12px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =========================
+           表單
+        ========================= */
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .form-label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #594b2d;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+
+        .form-input {
+
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 14px;
+
+            border: 1px solid #ddd6c8;
+
+            border-radius: 6px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .form-input:focus {
+
+            border-color: #c39a3e;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(195, 154, 62, 0.12);
+
+        }
+
+
+        /* =========================
+           記住帳號 / 忘記密碼
+        ========================= */
+
+        .login-options {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            font-size: 12px;
+
+        }
+
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #777777;
+
+        }
+
+
+        .remember input {
+
+            accent-color: #b58d32;
+
+        }
+
+
+        .forgot {
+
+            color: #9b782c;
+
+            text-decoration: none;
+
+        }
+
+
+        .forgot:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================
+           登入按鈕
+        ========================= */
+
+        .login-button {
+
+            width: 100%;
+
+            height: 48px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #b58d32;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .login-button:hover {
+
+            background: #957327;
+
+        }
+
+
+        .login-button:active {
+
+            transform: scale(0.99);
+
+        }
+
+
+        /* =========================
+           Demo 提示
+        ========================= */
+
+        .demo-box {
+
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border-radius: 6px;
+
+            background: #faf7ef;
+
+            border: 1px solid #eee4ce;
+
+            text-align: center;
+
+            color: #8b7650;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =========================
+           Footer
+        ========================= */
+
+        .footer {
+
+            text-align: center;
+
+            color: rgba(255,255,255,0.8);
+
+            font-size: 10px;
+
+            margin-top: 18px;
+
+        }
+
+
+        /* =========================
+           手機版
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .login-card {
+
+                padding: 30px 25px;
+
+            }
+
+
+            .title {
+
+                font-size: 22px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+
+        <!-- =========================
+             登入卡片
+        ========================= -->
+
+        <div class="login-card">
+
+
+            <!-- Logo -->
+
+            <div class="logo">
+                CP
+            </div>
+
+
+            <!-- 標題 -->
+
+            <h1 class="title">
+                校園資訊服務平台
+            </h1>
+
+
+            <p class="subtitle">
+                CAMPUS INFORMATION PORTAL
+            </p>
+
+
+
+            <!-- =========================
+                 帳號
+            ========================= -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="username">
+
+                    學號 / 帳號
+
+                </label>
+
+
+                <input
+                    id="username"
+                    class="form-input"
+                    type="text"
+                    placeholder="請輸入學號或帳號"
+                    autocomplete="username">
+
+            </div>
+
+
+
+            <!-- =========================
+                 密碼
+            ========================= -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="password">
+
+                    密碼
+
+                </label>
+
+
+                <input
+                    id="password"
+                    class="form-input"
+                    type="password"
+                    placeholder="請輸入密碼"
+                    autocomplete="current-password">
+
+            </div>
+
+
+
+            <!-- =========================
+                 登入選項
+            ========================= -->
+
+            <div class="login-options">
+
+
+                <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        id="remember">
+
+                    記住帳號
+
+                </label>
+
+
+                <a
+                    href="#"
+                    class="forgot"
+                    onclick="forgotPassword(event)">
+
+                    忘記密碼？
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 登入按鈕
+            ========================= -->
+
+            <button
+                class="login-button"
+                onclick="login()">
+
+                登入
+
+            </button>
+
+
+
+            <!-- =========================
+                 展示模式提示
+            ========================= -->
+<!-- 
+            <div class="demo-box">
+
+                <strong>
+                    展示 / 測試模式
+                </strong>
+
+                <br>
+
+                目前尚未連接資料庫。
+
+                <br>
+
+                輸入任何帳號與密碼即可進入系統。
+
+            </div>
+
+
+        </div> -->
+
+
+
+        <!-- Footer -->
+
+        <div class="footer">
+
+            © 2026 Campus Information System
+
+        </div>
+
+
+    </div>
+
+
+
+    <script src="api.js"></script>
+    <script>
+
+        /*
+         * ==========================================
+         * 登入
+         * ==========================================
+         *
+         * 呼叫 POST /api/student/login（student_no + password），
+         * 成功的話把後端回傳的使用者物件存進 localStorage 的 loginUser，
+         * 其他頁面（api.js 的 requireLogin）都靠這個判斷有沒有登入。
+         */
+
+        async function login() {
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            if (username === "") {
+
+                alert("請輸入帳號");
+
+                return;
+
+            }
+
+            if (password === "") {
+
+                alert("請輸入密碼");
+
+                return;
+
+            }
+
+            const button = document.querySelector(".login-button, button[onclick='login()']");
+            if (button) button.disabled = true;
+
+            try {
+
+                const user = await apiFetch("/student/login", {
+                    method: "POST",
+                    body: JSON.stringify({ student_no: username, password: password }),
+                });
+
+                localStorage.setItem("loginUser", JSON.stringify(user));
+
+                window.location.href = "index.html";
+
+            } catch (err) {
+
+                if (err.status === 401) {
+                    alert("學號或密碼錯誤，請再試一次。");
+                } else {
+                    alert("登入失敗，請確認伺服器是否正常：" + err.message);
+                }
+
+            } finally {
+
+                if (button) button.disabled = false;
+
+            }
+
+        }
+
+
+
+        /*
+         * ==========================================
+         * 忘記密碼
+         * ==========================================
+         */
+
+        function forgotPassword(event) {
+
+            event.preventDefault();
+
+            alert(
+                "忘記密碼功能目前尚未啟用。\n\n" +
+                "之後可以連接密碼重設功能。"
+            );
+
+        }
+
+
+        /*
+         * ==========================================
+         * Enter 登入
+         * ==========================================
+         */
+
+        document
+            .getElementById("password")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    login();
+
+                }
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>
