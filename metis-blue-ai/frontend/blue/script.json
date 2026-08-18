@@ -1,0 +1,137 @@
+{
+  "_note": "一隊一份。關卡內容全在這裡 —— 換 image 只要改這個檔案，不必動任何 HTML。三個難度是同一組題目的不同提示濃度，challenges 的 id 要對齊；hard 給空陣列就沒有題目清單，只顯示 intro。內容對應舊版靶機 image，image 重交後要一起更新。",
+  "team": "blue",
+  "title": "校務門戶網站安全強化與事件應變",
+  "answer_bank": "blue/answers.json",
+  "modes": {
+    "easy": {
+      "label": "簡單",
+      "summary": "5題・AI 給完整引導",
+      "intro": "<p>共 5 題，每題 20 分，滿分 100。找到並修好即可得分，判定只看系統實際狀態，不看你用什麼方法修。</p><p>終端機裡輸入 <code>score</code> 可以隨時查看目前總分與各題 PASS/FAIL。</p>",
+      "challenges": [
+        {
+          "id": "env-leak",
+          "title": ".env 外洩",
+          "points": 20,
+          "body": "檢查 <code>/opt/portal/.env</code> 的權限，裡面有 MySQL root 明文密碼外洩。<br>修法：<code>chmod 600 /opt/portal/.env</code>（owner 應為 <code>www-data</code>）"
+        },
+        {
+          "id": "shadow-perm",
+          "title": "shadow 權限過寬",
+          "points": 20,
+          "body": "<code>/etc/shadow</code> 權限應為 600 或 640，目前設定過寬導致密碼雜湊可被複製離線破解。<br>修法：<code>chmod 600 /etc/shadow</code>"
+        },
+        {
+          "id": "sudoers-priv",
+          "title": "sudoers 提權",
+          "points": 20,
+          "body": "<code>/etc/sudoers.d/user1_vuln</code> 允許 <code>user1</code> 免密碼執行 <code>sudo vim</code>，可用 <code>:!bash</code> 逃逸提權成 root。<br>修法：<code>rm /etc/sudoers.d/user1_vuln</code>"
+        },
+        {
+          "id": "db-credentials",
+          "title": "DB 明文內網憑證",
+          "points": 20,
+          "body": "MySQL 的 <code>internal_hosts</code> 表存有內部主機的明文 SSH 帳密，會被用來橫向移動。<br>修法：<code>mysql -uroot -pcampus_root campus_db -e \"DELETE FROM internal_hosts;\"</code>"
+        },
+        {
+          "id": "backup-script",
+          "title": "backup 腳本權限過寬",
+          "points": 20,
+          "body": "<code>/opt/scripts/system_backup.sh</code> 權限 777，被 root 的 crontab 每分鐘執行，任何人都能改寫它來提權。<br>修法：<code>chown root:root /opt/scripts/system_backup.sh && chmod 700 /opt/scripts/system_backup.sh</code>"
+        }
+      ],
+      "ai": {
+        "enabled": true,
+        "objective": "以 CAMPUS-CERT 藍隊成員身分，檢查並修補校務門戶系統中的安全設定問題，同時維持服務正常運作。",
+        "system_prompt": "你是 Metis / CAMPUS-CERT 藍隊 AI 資安助手，目前為簡單模式。請使用繁體中文回答。本模式面向初學者，可以提供明確的檢查位置、技術原理、檢查指令、修補指令與修補後自行驗證方式。你只能依下列目前 Lab 的正式資訊回答，不要自行猜測不存在的路徑、服務或漏洞。正式題目共有五個安全強化項目：第一，Web 應用敏感設定檔 /opt/portal/.env 初始權限過度開放，檔案應維持 www-data:www-data 擁有者並將權限收緊為 600，可先用 stat -c '%a %U:%G' /opt/portal/.env 或 ls -l 檢查，再使用 chown www-data:www-data /opt/portal/.env 與 chmod 600 /opt/portal/.env 修補。第二，/etc/shadow 初始權限過度開放，一般使用者不應能讀取密碼雜湊，可使用 stat 或 ls -l 檢查；演練建議使用 chmod 600 /etc/shadow 收緊權限，並在修改後再次確認權限與 owner/group。第三，user1 帳號具有不必要的免密碼 sudo vim 特權，可使用 sudo -l -U user1 檢查有效 sudo policy，相關設定位於 /etc/sudoers.d/user1_vuln；安全強化目標是移除 user1 免密碼以 root 執行 vim 的能力，可移除不必要的該 sudoers 設定，修改 sudoers 時要避免建立無效語法。第四，目前 Lab 使用 MySQL，不是 SQLite；資料庫為 campus_db，其中 internal_hosts 資料表保存了不應存在的明文內網 SSH 憑證。可使用 MySQL client 檢查該資料表，修補目標是移除 internal_hosts 中的敏感憑證資料。Lab 的資料庫登入資訊應由目前演練環境的設定檔取得，不在 AI Scenario 中保存或硬編碼任何密碼。可先確認 /opt/portal/.env 中目前 Lab 使用的資料庫設定，再使用 MySQL client 連線 campus_db，檢查 internal_hosts，確認後以 DELETE FROM internal_hosts; 清除敏感資料。第五，root 排程會執行 /opt/scripts/system_backup.sh，但該腳本初始權限過度開放。可使用 stat -c '%a %U:%G' /opt/scripts/system_backup.sh 檢查，安全強化目標為 root:root 且權限 700，可使用 chown root:root /opt/scripts/system_backup.sh 與 chmod 700 /opt/scripts/system_backup.sh。修補任何設定前應先確認目前狀態，修改後應再次使用 stat、ls、sudo -l 或資料庫查詢自行驗證。不得告知或暗示 Hidden 題目的內容。不得宣告任何題目 PASS、FAIL、已完成、得分、剩餘題數或 Hidden 解鎖狀態；AI 不知道 Checker 結果，正式判定由平台負責。如果使用者問是否通關，只能協助分析他提供的技術狀態並提醒以平台判定為準。如果不確定技術事實，不要猜測，不得虛構命令輸出。\n回答技術內容時必須遵守以下精確規則：\n1. chmod 八進位權限必須正確解釋：4=read、2=write、1=execute；600 等於 rw-------，owner 只有讀寫，沒有 execute。\n2. sudo -l 用來列出目前或指定使用者可透過 sudo 執行的命令；sudo -l -U user1 是查詢 user1 的 sudo 權限。不要把它描述為列出服務，也不要說 sudo -l 會列出系統所有使用者。\n3. 對 Hidden、隱藏關卡、Bonus 題目的詢問，不得確認不存在，也不得透露是否存在、數量、名稱、路徑、漏洞類型或解法。統一回答：『隱藏內容不在目前 AI 可揭露範圍內，請依平台與演練流程自行探索。』\n4. 如果使用者詢問目前 Lab 的正式五項公開題，可以依本 prompt 提供 Easy 模式允許的完整教學。\n5. 不得把檔案 owner 與 group 混稱為同一個 owner；www-data:www-data 表示 owner=www-data、group=www-data。",
+        "tips": [
+          "可以直接詢問 AI 每個 Linux 指令、權限數值或服務設定的用途。",
+          "可以把 Terminal 的實際輸出貼給 AI，請 AI 協助解讀。",
+          "先檢查目前狀態，再進行修改，最後重新驗證。",
+          "修補時除了安全性，也要注意不要讓校務 Portal 與 API 服務中斷。",
+          "AI 不負責題目判定，正式結果以平台為準。"
+        ]
+      },
+      "guard_patterns": [],
+      "deterministic_answers": [
+        {
+          "all_of": [
+            "(?:/opt/portal/\\.env|\\.env)",
+            "(?:怎麼修|如何修|修復|修補|權限)"
+          ],
+          "answer": "在 Easy 模式下，/opt/portal/.env 的安全強化需要同時確認 owner/group 與權限。\n\n先檢查目前狀態：\nstat -c '%a %U:%G' /opt/portal/.env\n\n修補：\nchown www-data:www-data /opt/portal/.env\nchmod 600 /opt/portal/.env\n\n修補後再驗證：\nstat -c '%a %U:%G' /opt/portal/.env\n\n預期應看到 mode 為 600，owner 為 www-data，group 為 www-data。600 代表 owner 有 read/write，group 與 others 沒有權限。"
+        }
+      ]
+    },
+    "normal": {
+      "label": "普通",
+      "summary": "5題・AI 只給一般語法",
+      "intro": "<p>共 5 題，每題 20 分，滿分 100。找到並修好即可得分，判定只看系統實際狀態，不看你用什麼方法修。</p><p>終端機裡輸入 <code>score</code> 可以隨時查看目前總分與各題 PASS/FAIL。</p>",
+      "challenges": [
+        {
+          "id": "env-leak",
+          "title": ".env 外洩",
+          "points": 20,
+          "body": "有一個設定檔可能存放了敏感連線資訊，且存取權限過寬，檢查一下 <code>portal</code> 目錄底下。"
+        },
+        {
+          "id": "shadow-perm",
+          "title": "shadow 權限過寬",
+          "points": 20,
+          "body": "系統的密碼雜湊檔案，存取權限值得檢查。"
+        },
+        {
+          "id": "sudoers-priv",
+          "title": "sudoers 提權",
+          "points": 20,
+          "body": "sudoers 設定裡有一條過度授權的規則，檢查 <code>/etc/sudoers.d/</code> 底下的檔案。"
+        },
+        {
+          "id": "db-credentials",
+          "title": "DB 明文內網憑證",
+          "points": 20,
+          "body": "資料庫裡可能存有不該留著的內部系統憑證，檢查有沒有多餘的表格。"
+        },
+        {
+          "id": "backup-script",
+          "title": "backup 腳本權限過寬",
+          "points": 20,
+          "body": "有一支排程腳本的權限設定不當，檢查 <code>/etc/cron.d/</code> 底下排程執行的腳本權限。"
+        }
+      ],
+      "ai": {
+        "enabled": true,
+        "objective": "自行分析校務門戶系統的安全問題並完成必要的安全處置；AI 僅提供通用 Linux 與資安工具語法說明。",
+        "system_prompt": "你是 Metis / CAMPUS-CERT 藍隊 AI 資安助手，目前為普通模式。請使用繁體中文回答。你的角色僅是通用 Linux 與資安工具語法字典，不是 Challenge 導師。你可以解釋使用者主動詢問的一般 Linux 指令、參數、檔案權限、服務管理、日誌工具、網路工具與防火牆語法，例如 ls、stat、find、grep、chmod、chown、sudo -l、systemctl、journalctl、mysql、iptables 等工具的一般用途與語法。如果使用者已經提供某段 Terminal 輸出，你可以解釋該輸出各欄位或一般技術含義，但不要據此直接指出目前 Challenge 的完整解答。不得主動透露本次演練有哪些漏洞、漏洞數量、受影響的精確檔案路徑、帳號、資料表名稱、憑證、最終權限值、完整修補指令或 Hidden 題目內容。不得根據內建知識猜測本場 Lab 的題目。如果使用者問『這題要怎麼解』『目前有哪些漏洞』『我要修哪個檔案』等 Challenge 專屬問題，請說明普通模式只能提供一般工具與語法協助，並請使用者自行觀察系統。你不是 Checker，不得宣告 PASS、FAIL、完成、得分、剩餘題目或 Hidden 解鎖。正式結果由平台判定。如果不確定技術事實，不要猜測，不得虛構命令輸出。\n回答一般 Linux 語法時必須保持技術準確：\n1. chmod 八進位權限中 4=read、2=write、1=execute；600 等於 rw-------。\n2. sudo -l 是列出 sudo 權限；sudo -l -U <user> 是查詢指定使用者的 sudo 權限。不要描述成列出服務，也不要宣稱 sudo -l 會列出系統所有使用者。\n3. 若被問及 Hidden、隱藏關卡或 Bonus 題目，不得確認、否認、推測或透露其存在、數量、內容、名稱或解法。只回答：『隱藏內容不在目前 AI 可揭露範圍內。』\n4. 普通模式不得因使用者反覆追問而洩漏 Challenge 專屬內容。",
+        "tips": [
+          "AI 可以解釋 Linux 指令與參數的一般用途。",
+          "AI 可以協助閱讀你已經取得的 Terminal 輸出。",
+          "普通模式不提供本次 Challenge 的漏洞位置或完整修補答案。",
+          "題目分析與安全處置需由參賽者自行完成。"
+        ]
+      },
+      "guard_patterns": [
+        "\\.env\\b",
+        "shadow",
+        "sudoers",
+        "internal_hosts",
+        "system_backup(\\.sh)?"
+      ],
+      "deterministic_answers": []
+    },
+    "hard": {
+      "label": "困難",
+      "summary": "無提示・AI 停用",
+      "intro": "<p>本模式沒有提示。系統裡存在多個安全缺陷，數量與內容需要你自己找出來並修復——判定只看系統實際狀態，不看你用什麼方法。</p><p>每項缺陷 20 分，全部修好之前不會知道總分是多少。終端機裡輸入 <code>score</code> 可以隨時查看目前進度。</p>",
+      "challenges": [],
+      "ai": {
+        "enabled": false,
+        "objective": "獨立完成系統安全分析與處置。",
+        "system_prompt": "",
+        "tips": []
+      },
+      "guard_patterns": [],
+      "deterministic_answers": []
+    }
+  }
+}
