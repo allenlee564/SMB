@@ -1,1 +1,0 @@
-blueai ALL=(root) NOPASSWD: /usr/local/sbin/blueai-autoblock *
