@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "title": "Metis 藍隊七關官方回答庫",
+  "irrelevant_response": "與題目無關",
+  "hidden_response": "隱藏內容不在目前 AI 可揭露範圍內，請依平台與演練流程自行探索。",
+  "entries": [
+    {
+      "id": "rules-and-scoring",
+      "visibility": "public",
+      "patterns": [
+        "判分|計分|分數|score|checker|PASS|FAIL|SLA|服務存活|扣分|總分|幾關|規則"
+      ],
+      "answer": "藍隊共有七關，每關 20 分，滿分 140 分；五題正式題加兩題隱藏加分題。判分只看系統實際狀態，沒有 flag 檔、沒有部分給分。checker.py 在容器外執行，來賓只能用 score 讀取推送進容器的結果。三個服務端點必須保持存活，服務中斷每分鐘扣 2 分。正式判定一律以平台 Checker 為準。"
+    },
+    {
+      "id": "challenge-01-env",
+      "challenge_id": "env-leak",
+      "context_key": "env_file",
+      "context_label": "第 1 關",
+      "visibility": "public",
+      "patterns": [
+        "(?:第 ?0?1 ?關|第一關|\\.env|env 外洩|MYSQL_ROOT_PASSWORD|portal.*env)"
+      ],
+      "answer": "第 1 關是 /opt/portal/.env 權限過度開放，初始 777 會讓一般使用者讀到明文資料庫憑證。先用 stat -c '%a %U:%G' /opt/portal/.env 或 ls -l 檢查，再以 chmod 600 /opt/portal/.env 收緊。判定條件是權限小於等於 600，owner 不影響判分；目前服務沒有讀取這支 .env，因此 chmod 600 不會讓服務中斷。600 代表 rw-------。"
+    },
+    {
+      "id": "challenge-02-shadow",
+      "challenge_id": "shadow-perm",
+      "context_key": "shadow",
+      "context_label": "第 2 關",
+      "visibility": "public",
+      "patterns": [
+        "(?:第 ?0?2 ?關|第二關|/etc/shadow|shadow 權限|密碼雜湊)"
+      ],
+      "answer": "第 2 關是 /etc/shadow 權限 644，導致所有本機使用者都能讀取密碼雜湊。先用 stat -c '%a %U:%G' /etc/shadow 或 ls -l 檢查，再以 chmod 640 /etc/shadow 修補；600 也可以。判定同時要求權限小於等於 640，且 group 必須為 shadow 或 root。不要為了修權限而誤改 group，維持 root:shadow 最安全。"
+    },
+    {
+      "id": "challenge-03-sudoers",
+      "challenge_id": "sudoers-priv",
+      "context_key": "sudo_user1",
+      "context_label": "第 3 關",
+      "visibility": "public",
+      "patterns": [
+        "(?:第 ?0?3 ?關|第三關|sudoers|sudo -l|NOPASSWD|user1.*vim|vim.*提權|GTFOBins)"
+      ],
+      "answer": "第 3 關是 user1 能免密碼以 root 執行 vim，vim 可透過 :!bash 執行 shell，形成提權。使用 sudo -l -U user1 檢查有效 sudo policy。可移除 /etc/sudoers.d/user1_vuln，或以其他方式確實拿掉 NOPASSWD vim 授權。Checker 看的是有效權限，不是指定檔案是否存在；只在 /etc/sudoers.d 內改檔名通常仍會被 sudo 載入。不要刪除系統原有的 README。"
+    },
+    {
+      "id": "challenge-04-database",
+      "challenge_id": "db-credentials",
+      "context_key": "internal_hosts",
+      "context_label": "第 4 關",
+      "visibility": "public",
+      "patterns": [
+        "(?:第 ?0?4 ?關|第四關|internal_hosts|campus_db|內網.*憑證|橫向移動|target-internal|MySQL)"
+      ],
+      "answer": "第 4 關是 campus_db.internal_hosts 保存 target-internal 的明文 SSH 憑證，攻擊者可由對外靶站橫向移動至內網主機。先查詢 internal_hosts 確認現況，再執行 DELETE FROM internal_hosts; 清空資料。不要 DROP TABLE，因為 Checker 查不到資料表會判定失敗。Checker 使用獨立唯讀 grader 帳號，只判斷筆數是否為 0，因此修改外洩的 root 密碼不會干擾判分。host 應為 target-internal；若是 192.168.2.120，代表使用了舊 image。"
+    },
+    {
+      "id": "challenge-05-backup",
+      "challenge_id": "backup-script",
+      "context_key": "backup_script",
+      "context_label": "第 5 關",
+      "visibility": "public",
+      "patterns": [
+        "(?:第 ?0?5 ?關|第五關|system_backup|backup 腳本|cron|crontab|排程.*權限)"
+      ],
+      "answer": "第 5 關是 root 每分鐘執行的 /opt/scripts/system_backup.sh 權限為 777，一般使用者可修改腳本並等待 root 執行。先用 stat -c '%a %U:%G' /opt/scripts/system_backup.sh 檢查，再執行 chown root:root /opt/scripts/system_backup.sh 與 chmod 700 /opt/scripts/system_backup.sh。判定要求 owner/group 為 root:root 且權限小於等於 700，兩個條件缺一不可。"
+    },
+    {
+      "id": "challenge-06-webshell",
+      "visibility": "hidden",
+      "patterns": [
+        "(?:第 ?0?6 ?關|第六關|webshell|backdoor\\.php|access_json|惡意 IP|iptables.*DROP)"
+      ],
+      "answer": "第 6 關是從 nginx access_json.log 鑑識曾存取 .backdoor.php 的來源 IP，再以 iptables INPUT DROP 精準封鎖所有惡意來源。不可刪除後門，也不可把正常流量 IP 一起封鎖。容器需要 NET_ADMIN。"
+    },
+    {
+      "id": "challenge-07-docker-socket",
+      "visibility": "hidden",
+      "patterns": [
+        "(?:第 ?0?7 ?關|第七關|docker socket|docker\\.sock|容器逃逸|/var/run/dind)"
+      ],
+      "answer": "第 7 關是曝露的沙盒 docker socket 形成容器逃逸路徑。判定要求 socket 移除或無法連線；chmod 對容器內 root 無效，移除 docker CLI 也不能阻止使用 curl 存取 socket。Checker 必須先以 --preflight 觀察過 honeypot 可用。"
+    },
+    {
+      "id": "linux-permissions",
+      "visibility": "public",
+      "patterns": [
+        "chmod|chown|stat -c|ls -l|檔案權限|owner|group|rwx|讀寫執行|八進位權限"
+      ],
+      "answer": "Unix 權限八進位中 4=read、2=write、1=execute；三位數依序是 owner、group、others。chmod 修改權限，chown 修改 owner/group，stat -c '%a %U:%G' 可查看數字權限及擁有者。回答時必須把 owner 與 group 分開描述。"
+    },
+    {
+      "id": "lab-operation",
+      "visibility": "public",
+      "patterns": [
+        "blue-a|blue-b|靶機|內網主機|終端機|terminal|dev-lab|preflight|NET_ADMIN"
+      ],
+      "answer": "blue-a 是對外校務門戶靶站，承載第 1 至第 7 關；blue-b 是內網主機，是橫向移動的終點。正式部署使用 install.sh blue，單機演示可用 blue/dev-lab.sh。首次啟動 MySQL 約需 40 至 60 秒。演示前應執行 checker.py --preflight，並確認 blue-a 具有 NET_ADMIN，否則無法操作 iptables。"
+    }
+  ]
+}
